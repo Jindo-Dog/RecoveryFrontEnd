@@ -1,0 +1,67 @@
+@use "/src/styles/styles" as *;
+
+.login-section {
+    height: 100%;
+    @include flex-center;
+
+    .login-article {
+        width: 600px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding: 20px;
+
+        h2 {
+            margin-bottom: 30px;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+
+            input {
+                height: 60px;
+            }
+
+            button {
+                height: 60px;
+            }
+        }
+
+        .login-links {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            a {
+                font-size: 24px;
+                color: $black-color;
+                text-decoration: none;
+            }
+        }
+
+        .kakao-login-btn {
+            height: 60px;
+            border-radius: 12px;
+            background-color: $kakao-background-color;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 28px;
+
+            img {
+                width: 36px;
+                height: 36px;
+            }
+
+            span {
+                flex: 1;
+                font-size: 30px;
+                color: $kakao-text-color;
+                text-decoration: none;
+            }
+        }
+    }
+}

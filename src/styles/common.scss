@@ -1,0 +1,201 @@
+@use "./styles" as *;
+@use "sass:color";
+
+a {
+    cursor: pointer;
+}
+
+.blind {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    clip: rect(0 0 0 0);
+    margin: -1px;
+    overflow: hidden;
+}
+
+section {
+    width: 100%;
+    text-align: center;
+}
+
+.btn,
+button,
+input[type="button"],
+input[type="submit"] {
+    @include i-flex-center;
+    cursor: pointer;
+    min-height: 30px;
+    font-size: 24px;
+    margin: 0;
+    padding: 0 12px;
+    border-radius: 20px;
+    font-weight: 400;
+    border: $border-darker;
+    color: $white-color;
+    background-color: $secondary-color;
+    word-break: break-word;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+    &:hover {
+        background-color: color.adjust($secondary-color, $lightness: -5%);
+    }
+
+    &.compact {
+        padding: 0 4px;
+    }
+
+    &.md {
+        font-size: 24px;
+        padding: 0 20px;
+        min-height: 32px;
+    }
+
+    &.primary {
+        @include btn-solid($primary-color);
+    }
+
+    &.primary-clear {
+        @include btn-solid($gray-lighter-color);
+    }
+
+    &.primary-line {
+        @include btn-line($primary-color);
+    }
+
+    &.secondary {
+        @include btn-solid($secondary-color);
+    }
+
+    &.secondary-line {
+        @include btn-line($secondary-color);
+    }
+
+    &.danger,
+    &.dangerous {
+        @include btn-solid($danger-color);
+    }
+
+    &.danger-line {
+        @include btn-line($danger-color);
+    }
+
+    &.black {
+        @include btn-solid($black-color);
+    }
+
+    &.gray {
+        @include btn-solid($gray-color);
+    }
+
+    &.gray-line {
+        @include btn-line($gray-color);
+    }
+
+    &.list-bar,
+    &.list_bar {
+        @include btn-solid($primary-color);
+
+        &.danger,
+        &.dangerous {
+            @include btn-solid($danger-color);
+            height: 28px;
+        }
+    }
+
+    &.flat {
+        @include btn-line($gray-lighter-color);
+        color: $black-color;
+    }
+}
+
+/*.btn-close {
+    background: transparent url("/public/images/close-x.svg") center / 1em auto no-repeat;
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    padding: 4px;
+    width: 40px;
+    height: 40px;
+    margin-right: 0;
+    opacity: 0.8;
+    border: none;
+    fill: $primary-color;
+    //color: transparent;
+
+    &.invert {
+        filter: invert(1);
+    }
+
+    &:hover {
+        background-color: transparent;
+    }
+}*/
+
+a {
+    background-color: transparent;
+    text-decoration: none;
+
+    &.decoration {
+        border-bottom: $border;
+    }
+
+    &.danger {
+        color: $danger-color;
+
+        &:hover {
+            background-color: transparent;
+            color: $danger-color;
+            text-decoration: underline;
+        }
+    }
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input:not([type]),
+select {
+    padding: 0 20px;
+    border: $border;
+    border-color: $gray-lighter-color;
+    border-radius: 20px;
+    margin: 0;
+    min-height: 30px;
+    font-size: 14px;
+
+    &.md {
+        font-size: 24px;
+        min-height: 36px;
+    }
+
+    &:disabled {
+        color: $gray-color;
+        background-color: $background-color;
+    }
+
+    &:first-child {
+        margin-left: 0;
+    }
+
+    &:last-child {
+        margin-right: 0;
+    }
+}
+
+select {
+}
+
+select:focus,
+input:focus {
+}
+
+label:has(input[type="radio"]),
+label:has(input[type="checkbox"]) {
+}
+
+.tabs {
+}

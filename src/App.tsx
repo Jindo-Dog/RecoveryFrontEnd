@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import Login from "./component/auth/login.tsx";
 import MemoirsList from "./component/memoirs/memoirsList.tsx";
 import SignUp from "./component/auth/signup.tsx";
+import User from "./component/user/user.tsx";
 
 function App() {
     return (
@@ -14,7 +15,8 @@ function App() {
                 <Routes>
                     <Route path={"/login"} element={<Login />} />
                     <Route path={"/"} element={<MemoirsList />} />
-                    <Route path={"/signup"} element={<SignUp/>}/>
+                    <Route path={"/signup"} element={<SignUp />} />
+                    <Route path={"/user"} element={<User />} />
                 </Routes>
             </React.Suspense>
         </div>

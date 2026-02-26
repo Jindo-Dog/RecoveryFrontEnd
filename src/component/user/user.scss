@@ -1,0 +1,74 @@
+@use "../../styles/styles" as *;
+@use "../../styles/function" as *;
+
+.user-section {
+    height: 100%;
+    @include flex-center;
+
+    .user-article {
+        width: 100%;
+        max-width: rem(1420px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .profile-image-wrapper {
+            position: relative;
+
+            .profile-image {
+                width: rem(200px);
+                height: rem(200px);
+                border-radius: 50%;
+                object-fit: cover;
+                object-position: center;
+                border: $gray-lighter-color 1px solid;
+            }
+
+            .profile-edit {
+                width: rem(25px);
+                height: rem(25px);
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                cursor: pointer;
+            }
+        }
+
+        form {
+            width: rem(600px);
+            display: flex;
+            flex-direction: column;
+            gap: rem(30px);
+            margin-top: rem(30px);
+
+            input {
+                height: rem(60px);
+            }
+
+            button {
+                height: rem(60px);
+            }
+        }
+
+        .user-links {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-top: rem(80px);
+
+            a {
+                font-size: rem(24px);
+                color: $black-color;
+                text-decoration: none;
+
+                &.edit-password {
+                }
+
+                &.withdrawal {
+                    color: $danger-color;
+                }
+            }
+        }
+    }
+}

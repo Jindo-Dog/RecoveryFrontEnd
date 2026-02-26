@@ -1,0 +1,18 @@
+@use "/src/styles/styles" as *;
+@use "/src/styles/function" as *;
+
+.app-sidebar {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+
+    .sidebar {
+        flex: 0 0 rem(300px);
+        background-color: $background-color;
+        overflow: auto;
+    }
+
+    .content {
+        flex: 1;
+    }
+}

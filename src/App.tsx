@@ -2,9 +2,11 @@ import React from "react";
 import "./App.scss";
 import "./styles/index.scss";
 import { Route, Routes } from "react-router-dom";
+import SideBar from "./component/common/sideBar.tsx";
 import Login from "./component/auth/login.tsx";
 import MemoirsList from "./component/memoirs/memoirsList.tsx";
 import SignUp from "./component/auth/signup.tsx";
+import User from "./component/user/user.tsx";
 
 function App() {
     return (
@@ -13,8 +15,11 @@ function App() {
             <React.Suspense>
                 <Routes>
                     <Route path={"/login"} element={<Login />} />
-                    <Route path={"/"} element={<MemoirsList />} />
-                    <Route path={"/signup"} element={<SignUp/>}/>
+                    <Route path={"/signup"} element={<SignUp />} />
+                    <Route element={<SideBar />}>
+                        <Route path={"/"} element={<MemoirsList />} />
+                        <Route path={"/user"} element={<User />} />
+                    </Route>
                 </Routes>
             </React.Suspense>
         </div>

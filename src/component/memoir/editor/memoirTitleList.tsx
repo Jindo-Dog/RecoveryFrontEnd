@@ -1,6 +1,6 @@
 import "./memoirTitleList.scss";
 import { useState } from "react";
-import type { MainTitleItem } from "./common/memoir.types.ts";
+import type { MainTitleItem } from "../common/memoir.types.ts";
 import MainMamoirTitle from "./mainMemoirTitle.tsx";
 import EditMainMemoirTitle from "./editMainMemoirTitle.tsx";
 

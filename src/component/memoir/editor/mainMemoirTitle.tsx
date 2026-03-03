@@ -1,9 +1,8 @@
-import "./main-memoir-title.scss";
-import type { MainTitleItem } from "../memoir.types";
+import "./mainMemoirTitle.scss";
+import type { MainTitleItem, SubTitleItem } from "./common/memoir.types";
 import SubMemoirTitle from "./subMemoirTitle";
-import type { SubTitleItem } from "../memoir.types";
 import EditSubTitle from "./editSubMemoirTitle";
-import { findMainTitleById } from "../memoir.utils";
+import { findMainTitleById } from "./common/memoir.utils";
 
 type MainMemoirTitleProps = {
     id: number;

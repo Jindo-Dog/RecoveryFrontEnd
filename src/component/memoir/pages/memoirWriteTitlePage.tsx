@@ -1,4 +1,4 @@
-import "./memoir-write-title-page.scss";
+import "./memoirWriteTitlePage.scss";
 import MemoirTitleList from "../editor/memoirTitleList";
 
 const MemoirWriteTitlePage = () => {

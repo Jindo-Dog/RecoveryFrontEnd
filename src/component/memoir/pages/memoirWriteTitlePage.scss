@@ -17,6 +17,7 @@
         max-width: rem(1270px);
         min-width: rem(800px);
         justify-content: flex-end;
+
         .improvement-btn {
             @include btn-solid($secondary-color);
         }

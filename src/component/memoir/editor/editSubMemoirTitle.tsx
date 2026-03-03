@@ -1,5 +1,5 @@
-import type { MainTitleItem } from "../memoir.types";
-import { addSubTitle } from "../memoir.utils";
+import type { MainTitleItem } from "./common/memoir.types";
+import { addSubTitle } from "./common/memoir.utils";
 
 type EditSubTitleProps = {
     mainTitleId: number;

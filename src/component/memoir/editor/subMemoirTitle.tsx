@@ -1,4 +1,4 @@
-import "./sub-memoir-title.scss";
+import "./subMemoirTitle.scss";
 
 type SubMemoirTitleProps = {
     title: string;

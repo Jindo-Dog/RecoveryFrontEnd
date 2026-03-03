@@ -1,6 +1,6 @@
-import type { MainTitleItem } from "../memoir.types";
-import "./edit-main-memoir-title.scss";
-import { addMainTitle } from "../memoir.utils";
+import type { MainTitleItem } from "./common/memoir.types";
+import "./editMainMemoirTitle.scss";
+import { addMainTitle } from "./common/memoir.utils";
 
 type EditMemoirProps = {
     memoirTitles: MainTitleItem[];

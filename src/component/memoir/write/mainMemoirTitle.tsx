@@ -4,8 +4,8 @@ import SubMemoirTitle from "./subMemoirTitle";
 import EditSubTitle from "./editSubMemoirTitle";
 import { useMainTitleItemStore } from "../common/useMainTitleItemStore";
 
-const MainMamoirTitle = (props: { id: number }) => {
-    const { id } = props;
+const MainMamoirTitle = (props: { id: number; editable: boolean }) => {
+    const { id, editable } = props;
     const mainTitleItem = useMainTitleItemStore((state) => state.mainTitleItems[id]);
     const { title, subMemoirTitles } = mainTitleItem;
 
@@ -17,7 +17,7 @@ const MainMamoirTitle = (props: { id: number }) => {
                 {subMemoirTitles.map((subMemoirTitle: SubTitleItem, idx: number) => {
                     return <SubMemoirTitle key={idx} title={subMemoirTitle.title} />;
                 })}
-                <EditSubTitle mainTitleId={id} />
+                {editable && <EditSubTitle mainTitleId={id} />}
             </div>
         </div>
     );

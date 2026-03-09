@@ -20,7 +20,7 @@ function App() {
                     <Route element={<SideBar />}>
                         <Route path={"/"} element={<MemoirsList />} />
                         <Route path={"/profile/edit"} element={<User />} />
-                        <Route path={"/memoir"} element={<MemoirWriteTitlePage />} />
+                        <Route path={"/memoir/write"} element={<MemoirWriteTitlePage />} />
                     </Route>
                 </Routes>
             </React.Suspense>

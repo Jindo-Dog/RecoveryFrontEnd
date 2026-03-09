@@ -25,7 +25,7 @@ const Menu = ({ items = defaultItems }: MenuProps) => {
             <article className={"menu-article"}>
                 <h2 className={"blind"}>메뉴바</h2>
 
-                <Link to={"/profile"} className={"menu-header"}>
+                <Link to={"/profile/edit"} className={"menu-header"}>
                     <img src={"images/temp-image.svg"} alt={"프로필 사진"} />
                     <span className={"user-name"}>
                         {username ? `${username}` : "김아무개"}

@@ -19,8 +19,8 @@ function App() {
                     <Route path={"/signup"} element={<SignUp />} />
                     <Route element={<SideBar />}>
                         <Route path={"/"} element={<MemoirsList />} />
-                        <Route path={"/user"} element={<User />} />
-                        <Route path={"/memoir"} element={<MemoirWriteTitlePage />} />
+                        <Route path={"/profile/edit"} element={<User />} />
+                        <Route path={"/memoir/write"} element={<MemoirWriteTitlePage />} />
                     </Route>
                 </Routes>
             </React.Suspense>

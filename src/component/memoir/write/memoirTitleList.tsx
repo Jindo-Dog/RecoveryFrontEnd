@@ -14,9 +14,20 @@ const data: MainTitleItem[] = [
             },
         ],
     },
+    {
+        title: "2026/03/09 회고 - 오늘의 나의 일기",
+        subMemoirTitles: [
+            {
+                title: "문구점을 갔다.",
+            },
+            {
+                title: "산책을 갔다.",
+            },
+        ],
+    },
 ];
 
-const MemoirTitleList = () => {
+const MemoirTitleList = ({ editable }: { editable: boolean }) => {
     const { mainTitleItems, setMainTitleItems } = useMainTitleItemStore();
 
     useEffect(() => {
@@ -30,10 +41,9 @@ const MemoirTitleList = () => {
             </div>
             <div className="memoir-list">
                 {mainTitleItems.map((memoirTitle: MainTitleItem, idx: number) => {
-                    return <MainMamoirTitle key={idx} id={idx} />;
+                    return <MainMamoirTitle key={idx} id={idx} editable={editable} />;
                 })}
-                {mainTitleItems.length > 0 && <hr />}
-                <EditMainMemoirTitle />
+                {editable && <EditMainMemoirTitle id={mainTitleItems.length} />}
             </div>
         </div>
     );

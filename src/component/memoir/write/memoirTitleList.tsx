@@ -43,7 +43,7 @@ const MemoirTitleList = ({ editable }: { editable: boolean }) => {
                 {mainTitleItems.map((memoirTitle: MainTitleItem, idx: number) => {
                     return <MainMamoirTitle key={idx} id={idx} editable={editable} />;
                 })}
-                {editable && <EditMainMemoirTitle id={mainTitleItems.length} />}
+                {editable && <EditMainMemoirTitle />}
             </div>
         </div>
     );

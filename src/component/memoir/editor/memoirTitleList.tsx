@@ -35,6 +35,10 @@ const MemoirTitleList = () => {
                 {mainTitleItems.length > 0 && <hr />}
                 <EditMainMemoirTitle />
             </div>
+            <div className="progress-circles">
+                <div className="first-circle"></div>
+                <div className="second-circle"></div>
+            </div>
         </div>
     );
 };

@@ -1,8 +1,9 @@
 import "./memoirTitleList.scss";
-import { useState } from "react";
+import { useEffect } from "react";
 import type { MainTitleItem } from "../common/memoir.types.ts";
 import MainMamoirTitle from "./mainMemoirTitle.tsx";
 import EditMainMemoirTitle from "./editMainMemoirTitle.tsx";
+import { useMainTitleItemStore } from "../common/useMainTitleItemStore";
 
 const data: MainTitleItem[] = [
     {
@@ -16,7 +17,11 @@ const data: MainTitleItem[] = [
 ];
 
 const MemoirTitleList = () => {
-    const [memoirTitles, setMemoirTitles] = useState<MainTitleItem[]>(data);
+    const { mainTitleItems, setMainTitleItems } = useMainTitleItemStore();
+
+    useEffect(() => {
+        setMainTitleItems(data);
+    }, []);
 
     return (
         <div className="memoir-div">
@@ -24,12 +29,10 @@ const MemoirTitleList = () => {
                 <span>오늘의 나를 회고해보세요</span>
             </div>
             <div className="memoir-list">
-                {memoirTitles.map((memoirTitle: MainTitleItem, idx: number) => {
-                    return (
-                        <MainMamoirTitle key={idx} id={idx} titleItems={memoirTitles} setTitleItems={setMemoirTitles} />
-                    );
+                {mainTitleItems.map((memoirTitle: MainTitleItem, idx: number) => {
+                    return <MainMamoirTitle key={idx} id={idx} />;
                 })}
-                <EditMainMemoirTitle memoirTitles={memoirTitles} setMemoirTitles={setMemoirTitles} />
+                <EditMainMemoirTitle />
             </div>
         </div>
     );

@@ -1,0 +1,44 @@
+@use "/src/styles/styles" as *;
+@use "/src/styles/function" as *;
+
+.improvement-section {
+    @include flex-center;
+    flex-direction: column;
+
+    .memoir-improvement-title {
+        margin-top: rem(40px);
+        font-size: $title-font-size;
+    }
+
+    .progress-circles {
+        display: flex;
+        flex-direction: row;
+        margin-top: rem(10px);
+        gap: rem(5px);
+
+        div {
+            width: rem(10px);
+            height: rem(10px);
+            border: rem(1px) solid gray;
+            border-radius: rem(10px);
+        }
+
+        .second-circle {
+            background-color: gray;
+        }
+    }
+
+    .btn-footer {
+        display: flex;
+        margin-top: rem(30px);
+        width: 100%;
+        max-width: rem(1270px);
+        min-width: rem(800px);
+        justify-content: flex-end;
+        gap: rem(5px);
+
+        .improvement-btn {
+            @include btn-solid($secondary-color);
+        }
+    }
+}

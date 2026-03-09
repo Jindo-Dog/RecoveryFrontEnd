@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import type { MainTitleItem } from "../common/memoir.types.ts";
 import MainMamoirTitle from "./mainMemoirTitle.tsx";
 import EditMainMemoirTitle from "./editMainMemoirTitle.tsx";
-import { useMainTitleItemStore } from "../common/useMainTitleItemStore";
+import { useMainTitleItemStore } from "../common/useMainTitleItemStore.ts";
 
 const data: MainTitleItem[] = [
     {
@@ -34,10 +34,6 @@ const MemoirTitleList = () => {
                 })}
                 {mainTitleItems.length > 0 && <hr />}
                 <EditMainMemoirTitle />
-            </div>
-            <div className="progress-circles">
-                <div className="first-circle"></div>
-                <div className="second-circle"></div>
             </div>
         </div>
     );

@@ -34,22 +34,4 @@
         height: rem(60px);
         text-align: center;
     }
-
-    .progress-circles {
-        display: flex;
-        flex-direction: row;
-        margin-top: rem(10px);
-        gap: rem(5px);
-
-        div {
-            width: rem(10px);
-            height: rem(10px);
-            border: rem(1px) solid gray;
-            border-radius: rem(10px);
-        }
-
-        .first-circle {
-            background-color: gray;
-        }
-    }
 }

@@ -32,6 +32,7 @@ const MemoirTitleList = () => {
                 {mainTitleItems.map((memoirTitle: MainTitleItem, idx: number) => {
                     return <MainMamoirTitle key={idx} id={idx} />;
                 })}
+                {mainTitleItems.length > 0 && <hr />}
                 <EditMainMemoirTitle />
             </div>
         </div>

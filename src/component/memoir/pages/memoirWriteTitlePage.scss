@@ -10,6 +10,18 @@
         font-size: $title-font-size;
     }
 
+    .memoir-box {
+        display: flex;
+        flex-direction: column;
+        gap: rem(10px);
+
+        .memoir-title {
+            width: 100%;
+            text-align: left;
+            margin-top: rem(40px);
+        }
+    }
+
     .btn-footer {
         display: flex;
         margin-top: rem(30px);

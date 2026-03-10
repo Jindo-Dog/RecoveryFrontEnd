@@ -5,13 +5,7 @@
     @include flex-center;
     flex-direction: column;
     width: rem(1280px);
-    margin-top: rem(40px);
     text-align: left;
-
-    .memoir-title {
-        width: 100%;
-        text-align: left;
-    }
 
     .memoir-list {
         display: flex;
@@ -19,7 +13,6 @@
         width: 100%;
         height: rem(652px);
         overflow-y: auto;
-        margin-top: rem(10px);
         border: rem(1px) solid black;
         padding: rem(5px);
         gap: rem(5px);

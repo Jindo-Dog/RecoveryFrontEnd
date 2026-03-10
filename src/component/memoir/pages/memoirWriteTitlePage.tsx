@@ -7,7 +7,12 @@ const MemoirWriteTitlePage = () => {
         <section className={"memoir-section"}>
             <h1 className={"memoir-edit-title"}>김아무개님 오늘 하루는 어떠셨나요?</h1>
             <span>모두에겐 비밀로 할게요 제게 맘껏 이야기해주세요</span>
-            <MemoirTitleList editable={true} width={"1270px"} />
+            <div className={"memoir-box"}>
+                <div className="memoir-title">
+                    <span>오늘의 나를 회고해보세요</span>
+                </div>
+                <MemoirTitleList editable={true} width={"1270px"} />
+            </div>
 
             <div className="progress-circles">
                 <div className="first-circle"></div>

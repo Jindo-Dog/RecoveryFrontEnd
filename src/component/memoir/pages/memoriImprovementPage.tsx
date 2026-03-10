@@ -18,7 +18,7 @@ const MemoirImprovementPage = () => {
             </div>
 
             <div className={"btn-footer"}>
-                <Link to="/memoir">
+                <Link to="/memoir/write">
                     <button className={"feedback-btn"}>이전({feedbackCnt}/5)</button>
                 </Link>
                 <Link to="/memoir/feedback">

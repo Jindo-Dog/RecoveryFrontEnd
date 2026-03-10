@@ -1,4 +1,4 @@
-import "./memoirImprovement.scss";
+import "./memoirImprovementPage.scss";
 import MemoirTitleList from "../write/memoirTitleList";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -32,7 +32,7 @@ const MemoirImprovementPage = () => {
 
             <div className={"btn-footer"}>
                 <Link to="/memoir/write">
-                    <button className={"feedback-btn"}>이전</button>
+                    <button className={"previous-btn"}>이전</button>
                 </Link>
                 <Link to="/memoir/feedback">
                     <button className={"feedback-btn"}>피드백 받기({feedbackCnt}/5)</button>

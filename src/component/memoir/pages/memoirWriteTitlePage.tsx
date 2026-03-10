@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const MemoirWriteTitlePage = () => {
     return (
         <section className={"memoir-section"}>
-            <h1 className={"memoir-edit-title"}>김아무개님 오늘 하루는 어떠셨나요?</h1>
+            <h2 className={"memoir-edit-title"}>김아무개님 오늘 하루는 어떠셨나요?</h2>
             <span>모두에겐 비밀로 할게요 제게 맘껏 이야기해주세요</span>
             <div className={"memoir-box"}>
                 <div className="memoir-title">

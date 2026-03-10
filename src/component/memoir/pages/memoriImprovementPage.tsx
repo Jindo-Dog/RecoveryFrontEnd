@@ -8,7 +8,7 @@ const MemoirImprovementPage = () => {
 
     return (
         <section className={"improvement-section"}>
-            <h1 className={"memoir-improvement-title"}>느낀점이나 개선점이 있나요?</h1>
+            <h2 className={"memoir-improvement-title"}>느낀점이나 개선점이 있나요?</h2>
             <span>이런 상황은 어떻게 해결할 수 있을까요 편하게 이야기해주세요</span>
             <div className={"improvement-box"}>
                 <div className={"left-box"}>

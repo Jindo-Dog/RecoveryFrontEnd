@@ -27,7 +27,7 @@ const data: MainTitleItem[] = [
     },
 ];
 
-const MemoirTitleList = ({ editable }: { editable: boolean }) => {
+const MemoirTitleList = ({ editable, width }: { editable: boolean; width: string }) => {
     const { mainTitleItems, setMainTitleItems } = useMainTitleItemStore();
 
     useEffect(() => {
@@ -35,7 +35,7 @@ const MemoirTitleList = ({ editable }: { editable: boolean }) => {
     }, []);
 
     return (
-        <div className="memoir-div">
+        <div style={{ width: width }} className="memoir-div">
             <div className="memoir-title">
                 <span>오늘의 나를 회고해보세요</span>
             </div>

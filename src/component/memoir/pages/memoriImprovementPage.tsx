@@ -10,7 +10,7 @@ const MemoirImprovementPage = () => {
         <section className={"improvement-section"}>
             <h1 className={"memoir-improvement-title"}>느낀점이나 개선점이 있나요?</h1>
             <span>이런 상황은 어떻게 해결할 수 있을까요 편하게 이야기해주세요</span>
-            <MemoirTitleList editable={false} />
+            <MemoirTitleList editable={false} width={"625px"} />
 
             <div className="progress-circles">
                 <div className="first-circle"></div>

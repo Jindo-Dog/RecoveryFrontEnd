@@ -10,6 +10,37 @@
         font-size: $title-font-size;
     }
 
+    .memoir-title {
+        width: 100%;
+        text-align: left;
+    }
+
+    .improvement-box {
+        display: flex;
+        flex-direction: row;
+        gap: rem(10px);
+        margin-top: rem(40px);
+
+        .left-box {
+            display: flex;
+            flex-direction: column;
+            gap: rem(10px);
+        }
+
+        .right-box {
+            display: flex;
+            flex-direction: column;
+            gap: rem(10px);
+        }
+
+        .improvement-editor {
+            width: rem(625px);
+            height: rem(652px);
+            border: rem(1px) solid black;
+            resize: none;
+        }
+    }
+
     .progress-circles {
         display: flex;
         flex-direction: row;

@@ -1,6 +1,8 @@
 import "./memoirsCalender.scss";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
+import { format, isAfter } from "date-fns";
+import { ko } from "date-fns/locale";
 import { type MainTitleItem } from "./common/memoir.types";
 
 const MOCK_DATA: MainTitleItem[] = [
@@ -15,12 +17,8 @@ const MOCK_DATA: MainTitleItem[] = [
 ];
 const MOCK_DATE: string[] = ["2026-03-09", "2026-03-08"];
 
-const weekdayFormatter = new Intl.DateTimeFormat("ko-KR", { weekday: "short" });
 const toDateKey = (date: Date) => {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, "0");
-    const d = String(date.getDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`;
+    return format(date, "yyyy-MM-dd");
 };
 
 const MemoirsCalender = () => {
@@ -43,6 +41,11 @@ const MemoirsCalender = () => {
         setData(MOCK_DATA || null);
     };
 
+    function isFuture(date: Date) {
+        const today = new Date();
+        return isAfter(date, today);
+    }
+
     useEffect(() => {
         void fetchData(selectedDate);
     }, [selectedDate]);
@@ -54,12 +57,10 @@ const MemoirsCalender = () => {
                 <Calendar
                     value={selectedDate}
                     onChange={handleDateChange}
-                    formatDay={(_locale, date) => String(date.getDate())}
-                    formatYear={(_locale, date) => String(date.getFullYear())}
-                    formatMonthYear={(_locale, date) =>
-                        `${date.getFullYear()}. ${String(date.getMonth() + 1).padStart(2, "0")}`
-                    }
-                    formatShortWeekday={(_locale, date) => weekdayFormatter.format(date)}
+                    formatDay={(_locale, date) => format(date, "d")}
+                    formatYear={(_locale, date) => format(date, "yyyy")}
+                    formatMonthYear={(_locale, date) => format(date, "yyyy.MM")}
+                    formatShortWeekday={(_locale, date) => format(date, "EEE", { locale: ko })}
                     calendarType="iso8601"
                     showNeighboringMonth={true}
                     minDetail="year"
@@ -94,7 +95,7 @@ const MemoirsCalender = () => {
                                 </div>
                             </>
                         ) : (
-                            <button className={"secondary"}>새로 작성하기</button>
+                            !isFuture(selectedDate) && <button className={"secondary"}>새로 작성하기</button>
                         )}
                     </div>
                 )}

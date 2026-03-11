@@ -8,6 +8,7 @@ import MemoirsList from "./component/memoir/memoirsList.tsx";
 import SignUp from "./component/auth/signup.tsx";
 import User from "./component/user/user.tsx";
 import MemoirWriteTitlePage from "./component/memoir/pages/memoirWriteTitlePage.tsx";
+import MemoirImprovementPage from "./component/memoir/pages/memoriImprovementPage.tsx";
 import MemoirsCalender from "./component/memoir/memoirsCalender.tsx";
 
 function App() {
@@ -21,8 +22,9 @@ function App() {
                     <Route element={<SideBar />}>
                         <Route path={"/"} element={<MemoirsList />} />
                         <Route path={"/calender"} element={<MemoirsCalender />} />
-                        <Route path={"/user"} element={<User />} />
-                        <Route path={"/memoir"} element={<MemoirWriteTitlePage />} />
+                        <Route path={"/profile/edit"} element={<User />} />
+                        <Route path={"/memoir/write"} element={<MemoirWriteTitlePage />} />
+                        <Route path={"/memoir/improvement"} element={<MemoirImprovementPage />} />
                     </Route>
                 </Routes>
             </React.Suspense>

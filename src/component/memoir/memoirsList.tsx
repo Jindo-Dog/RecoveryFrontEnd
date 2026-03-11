@@ -5,7 +5,7 @@ const MemoirsList = () => {
             <br />
             <a href={"/signup"}>signup</a>
             <br />
-            <a href={"/memoir"}>memoir</a>
+            <a href={"/memoir/write"}>memoir</a>
             <br />
             <a href={"/calender"}>calender</a>
         </div>

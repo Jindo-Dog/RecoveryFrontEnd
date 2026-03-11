@@ -1,0 +1,191 @@
+@use "/src/styles/styles" as *;
+@use "/src/styles/function" as *;
+
+.calender-section {
+    height: 100%;
+    @include flex-center;
+
+    .calender-article {
+        width: 100%;
+        max-width: rem(1280px);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: rem(50px);
+
+        .react-calendar {
+            width: 100%;
+            max-width: rem(800px);
+            min-height: rem(550px);
+            border: 1px solid $gray-lighter-color;
+            border-radius: rem(15px);
+            padding: 3% 5%;
+            background-color: $white-color;
+            color: $black-color;
+
+            button {
+                color: $black-color;
+                background-color: transparent;
+                border: none;
+            }
+
+            .react-calendar__tile {
+                position: relative;
+            }
+
+            .react-calendar__tile:hover {
+                cursor: default;
+            }
+
+            .react-calendar__navigation {
+                border-bottom: 1px solid $gray-lighter-color;
+                padding-bottom: rem(20px);
+            }
+
+            // 좌우 네비게이션 버튼 색상
+            .react-calendar__navigation__arrow {
+                background-color: transparent;
+                color: $primary-lighter-color;
+            }
+
+            /* 네비게이션 텍스트 클릭 비활성화 */
+            .react-calendar__navigation__label {
+                //pointer-events: none;
+            }
+
+            .react-calendar__navigation button:active {
+                background-color: transparent;
+            }
+
+            .react-calendar__navigation button:focus {
+                background-color: transparent;
+                outline: none;
+            }
+
+            // 상단 네비게이션(년/월) 칸 크기 축소
+            .react-calendar__navigation__label {
+                flex-grow: 0;
+            }
+
+            .react-calendar__month-view__weekdays__weekday {
+                padding: rem(20px) 0;
+            }
+
+            // 요일 표시
+            .react-calendar__month-view__weekdays__weekday abbr {
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+            // 토요일 색상 변경
+            .react-calendar__month-view__weekdays__weekday--weekend abbr[title="토요일"] {
+                color: $blue-color;
+            }
+
+            // 일요일 색상 변경
+            .react-calendar__month-view__weekdays__weekday--weekend abbr[title="일요일"] {
+                color: $red-color;
+            }
+
+            .react-calendar__month-view__weekdays__weekday abbr {
+                color: $black-color;
+            }
+
+            .react-calendar__month-view__days__day {
+                font-size: 1rem;
+            }
+
+            .react-calendar__month-view__days__day:nth-child abbr {
+                color: $black-color;
+            }
+
+            // 토요일 색상 변경
+            .react-calendar__month-view__days__day--weekend:nth-child(7n-1) abbr {
+                color: $blue-color;
+            }
+
+            // 일요일 색상 변경
+            .react-calendar__month-view__days__day--weekend:nth-child(7n) abbr {
+                color: $red-color;
+            }
+
+            // 이전 달과 다음 달의 날짜 숫자들의 색상 변경
+            .react-calendar__month-view__days__day--neighboringMonth {
+                abbr {
+                    color: $gray-lighter-color !important;
+                }
+            }
+
+            // 선택 날짜 폰트 컬러
+            .react-calendar__tile--active {
+                background: none;
+                position: relative;
+                z-index: 1;
+                abbr {
+                    color: $white-color;
+                    position: relative;
+                    z-index: 2;
+                }
+            }
+
+            // 선택 날짜 원형 스타일
+            .react-calendar__tile--active::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: rem(40px);
+                height: rem(40px);
+                border-radius: 50%;
+                background-color: $primary-lighter-color;
+                transform: translate(-50%, -50%);
+            }
+
+            // 일 날짜 간격
+            .react-calendar__tile {
+                padding: rem(15px);
+            }
+
+            // 네비게이션 월 스타일 적용
+            .react-calendar__year-view__months__month {
+                padding: rem(30px);
+            }
+
+            .react-calendar__tile-includeData {
+                background-color: $red-color;
+                border-radius: 50%;
+                width: rem(7px);
+                height: rem(7px);
+                position: absolute;
+                top: 75%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        .data-display {
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: rem(50px) 0 rem(60px);
+            gap: rem(40px);
+
+            button {
+                width: rem(260px);
+                height: rem(60px);
+            }
+
+            .memoir-footer {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: end;
+                gap: rem(20px);
+            }
+        }
+    }
+}

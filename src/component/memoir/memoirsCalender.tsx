@@ -31,6 +31,12 @@ const MemoirsCalender = () => {
         }
     };
 
+    const handleStartDateChange = (value: unknown) => {
+        if (value instanceof Date) {
+            //TODO: fetch markedDate with month
+        }
+    };
+
     const fetchData = async (date: Date) => {
         // TODO: 백엔드 구축 후 date에 따른 호출로 변경
         try {
@@ -64,6 +70,7 @@ const MemoirsCalender = () => {
                     calendarType="iso8601"
                     showNeighboringMonth={true}
                     minDetail="year"
+                    onActiveStartDateChange={handleStartDateChange}
                     tileContent={({ date, view }) => {
                         if (view !== "month") return null;
 

@@ -4,6 +4,7 @@ import Calendar from "react-calendar";
 import { format, isAfter } from "date-fns";
 import { ko } from "date-fns/locale";
 import { type MainTitleItem } from "./common/memoir.types";
+import MemoirTitleList from "./write/memoirTitleList.tsx";
 
 const MOCK_DATA: MainTitleItem[] = [
     {
@@ -82,19 +83,8 @@ const MemoirsCalender = () => {
                     <div className="data-display">
                         {data ? (
                             <>
-                                <div className={"memoir-list"}>
-                                    <ul>
-                                        {data.map((item, index) => (
-                                            <li key={index}>
-                                                <strong>{item.title}</strong>
-                                                <ul>
-                                                    {item.subMemoirTitles.map((sub, subIndex) => (
-                                                        <li key={subIndex}>{sub.title}</li>
-                                                    ))}
-                                                </ul>
-                                            </li>
-                                        ))}
-                                    </ul>
+                                <div className={"memoir-content"}>
+                                    <MemoirTitleList editable={false} width={"100%"} />
                                 </div>
                                 <div className={"memoir-footer"}>
                                     <button className={"secondary"}>수정하기</button>

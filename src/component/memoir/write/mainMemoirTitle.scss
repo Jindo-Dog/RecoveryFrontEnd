@@ -7,11 +7,33 @@
     width: 100%;
     gap: rem(5px);
 
-    .main-title {
-        @include flex-center;
+    .main-title-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         height: rem(60px);
         text-align: center;
         border: $border;
+
+        .main-title-content {
+            border: none;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        img {
+            width: rem(30px);
+            height: rem(30px);
+        }
+
+        .btn-container {
+            position: absolute;
+            display: flex;
+            right: rem(10px);
+            gap: rem(5px);
+        }
     }
 
     .sub-title-container {

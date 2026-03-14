@@ -1,15 +1,40 @@
 import "./subMemoirTitle.scss";
+import { useMainTitleItemStore } from "../common/useMainTitleItemStore";
+import { useState } from "react";
 
 type SubMemoirTitleProps = {
-    title: string;
+    mainTitleId: number;
+    id: number;
 };
 
 const SubMemoirTitle = (props: SubMemoirTitleProps) => {
-    const { title } = props;
+    const { mainTitleId, id } = props;
+    const { title, mode } = useMainTitleItemStore((state) => state.mainTitleItems[mainTitleId].subMemoirTitles[id]);
+    const { deleteSubTitleItem, updateSubTitleMode } = useMainTitleItemStore();
+    const [btnShow, setBtnShow] = useState(false);
+
+    const handleMoreBtn = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setBtnShow(!btnShow);
+    };
+
+    const handleDeleteBtn = () => {
+        deleteSubTitleItem(mainTitleId, id);
+        // Todo: model띄우기
+    };
+
+    const handleEditbtn = () => {
+        updateSubTitleMode(mainTitleId, id);
+    };
 
     return (
         <div className={"sub-title"}>
-            <span className={"sub-title-text"}>{title}</span>
+            <input className={"sub-title-content"} value={title} disabled={mode === "VIEW"} />
+            <div className={"btn-container"}>
+                {btnShow && <img src="/images/delete.svg" className={"delete-img"} onClick={handleDeleteBtn} />}
+                {btnShow && <img src="/images/edit.svg" className={"edit-img"} onClick={handleEditbtn} />}
+                <img src="/images/more.svg" className={"more-img"} onClick={handleMoreBtn} />
+            </div>
         </div>
     );
 };

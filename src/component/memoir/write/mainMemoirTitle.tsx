@@ -18,8 +18,9 @@ const MainMamoirTitle = (props: { id: number; editable: boolean }) => {
     };
 
     const handleDeleteBtn = () => {
-        deleteMainTitleItem(id);
-        // model띄우기
+        if (confirm("정말로 삭제하시겠습니까?")) {
+            deleteMainTitleItem(id);
+        }
     };
 
     const handleEditbtn = () => {

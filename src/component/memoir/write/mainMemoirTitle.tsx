@@ -50,15 +50,17 @@ const MainMamoirTitle = (props: { id: number; editable: boolean }) => {
                     onChange={handleOnChange}
                     onKeyDown={handlePressEnter}
                 />
-                <div className={"btn-container"}>
-                    {btnShow && <img src="/images/delete.svg" className={"delete-img"} onClick={handleDeleteBtn} />}
-                    {btnShow && <img src="/images/edit.svg" className={"edit-img"} onClick={handleEditbtn} />}
-                    <img src="/images/more.svg" className={"more-img"} onClick={handleMoreBtn} />
-                </div>
+                {editable && (
+                    <div className={"btn-container"}>
+                        {btnShow && <img src="/images/delete.svg" className={"delete-img"} onClick={handleDeleteBtn} />}
+                        {btnShow && <img src="/images/edit.svg" className={"edit-img"} onClick={handleEditbtn} />}
+                        <img src="/images/more.svg" className={"more-img"} onClick={handleMoreBtn} />
+                    </div>
+                )}
             </div>
             <div className={"sub-title-container"}>
                 {subMemoirTitles.map((subMemoirTitle: SubTitleItem, idx: number) => {
-                    return <SubMemoirTitle key={idx} mainTitleId={id} id={idx} />;
+                    return <SubMemoirTitle key={idx} mainTitleId={id} id={idx} editable={editable} />;
                 })}
                 {editable && <EditSubTitle mainTitleId={id} />}
             </div>

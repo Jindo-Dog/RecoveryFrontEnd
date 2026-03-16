@@ -5,10 +5,11 @@ import { useState } from "react";
 type SubMemoirTitleProps = {
     mainTitleId: number;
     id: number;
+    editable: boolean;
 };
 
 const SubMemoirTitle = (props: SubMemoirTitleProps) => {
-    const { mainTitleId, id } = props;
+    const { mainTitleId, id, editable } = props;
     const { title, mode } = useMainTitleItemStore((state) => state.mainTitleItems[mainTitleId].subMemoirTitles[id]);
     const { deleteSubTitleItem, updateSubTitleMode, updateSubTitle } = useMainTitleItemStore();
     const [btnShow, setBtnShow] = useState(false);
@@ -49,11 +50,13 @@ const SubMemoirTitle = (props: SubMemoirTitleProps) => {
                 onChange={handleOnChage}
                 onKeyDown={handlePressEnter}
             />
-            <div className={"btn-container"}>
-                {btnShow && <img src="/images/delete.svg" className={"delete-img"} onClick={handleDeleteBtn} />}
-                {btnShow && <img src="/images/edit.svg" className={"edit-img"} onClick={handleEditbtn} />}
-                <img src="/images/more.svg" className={"more-img"} onClick={handleMoreBtn} />
-            </div>
+            {editable && (
+                <div className={"btn-container"}>
+                    {btnShow && <img src="/images/delete.svg" className={"delete-img"} onClick={handleDeleteBtn} />}
+                    {btnShow && <img src="/images/edit.svg" className={"edit-img"} onClick={handleEditbtn} />}
+                    <img src="/images/more.svg" className={"more-img"} onClick={handleMoreBtn} />
+                </div>
+            )}
         </div>
     );
 };

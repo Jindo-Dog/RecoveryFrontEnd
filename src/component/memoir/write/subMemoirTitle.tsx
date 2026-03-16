@@ -10,8 +10,9 @@ type SubMemoirTitleProps = {
 const SubMemoirTitle = (props: SubMemoirTitleProps) => {
     const { mainTitleId, id } = props;
     const { title, mode } = useMainTitleItemStore((state) => state.mainTitleItems[mainTitleId].subMemoirTitles[id]);
-    const { deleteSubTitleItem, updateSubTitleMode } = useMainTitleItemStore();
+    const { deleteSubTitleItem, updateSubTitleMode, updateSubTitle } = useMainTitleItemStore();
     const [btnShow, setBtnShow] = useState(false);
+    const [titleState, setTitleState] = useState(title);
 
     const handleMoreBtn = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -19,17 +20,35 @@ const SubMemoirTitle = (props: SubMemoirTitleProps) => {
     };
 
     const handleDeleteBtn = () => {
-        deleteSubTitleItem(mainTitleId, id);
-        // Todo: model띄우기
+        if (confirm("정말로 삭제하시겠습니까?")) {
+            deleteSubTitleItem(mainTitleId, id);
+        }
     };
 
     const handleEditbtn = () => {
         updateSubTitleMode(mainTitleId, id);
     };
 
+    const handleOnChage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTitleState(e.currentTarget.value);
+    };
+
+    const handlePressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            updateSubTitle(mainTitleId, id, e.currentTarget.value);
+            updateSubTitleMode(mainTitleId, id);
+        }
+    };
+
     return (
         <div className={"sub-title"}>
-            <input className={"sub-title-content"} value={title} disabled={mode === "VIEW"} />
+            <input
+                className={"sub-title-content"}
+                value={titleState}
+                disabled={mode === "VIEW"}
+                onChange={handleOnChage}
+                onKeyDown={handlePressEnter}
+            />
             <div className={"btn-container"}>
                 {btnShow && <img src="/images/delete.svg" className={"delete-img"} onClick={handleDeleteBtn} />}
                 {btnShow && <img src="/images/edit.svg" className={"edit-img"} onClick={handleEditbtn} />}

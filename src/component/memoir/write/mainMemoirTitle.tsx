@@ -35,6 +35,7 @@ const MainMamoirTitle = (props: { id: number; editable: boolean }) => {
     const handlePressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             updateMainTitle(id, e.currentTarget.value);
+            updateMainTitleMode(id);
         }
     };
 

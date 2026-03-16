@@ -36,6 +36,7 @@ type MainTitleItemStore = {
     setMainTitleItems: (mainTitleItems: MainTitleItem[]) => void;
     deleteMainTitleItem: (id: number) => void;
     updateMainTitleMode: (id: number) => void;
+    updateMainTitle: (id: number, title: string) => void;
     deleteSubTitleItem: (mainTitleId: number, id: number) => void;
     updateSubTitleMode: (mainTitleId: number, id: number) => void;
 };
@@ -60,6 +61,11 @@ export const useMainTitleItemStore = create<MainTitleItemStore>()(
             set((state) => {
                 const mode = state.mainTitleItems[mainTitleId].mode;
                 state.mainTitleItems[mainTitleId].mode = mode === "VIEW" ? "EDIT" : "VIEW";
+            });
+        },
+        updateMainTitle: (mainTitleId: number, mainTitle: string) => {
+            set((state) => {
+                state.mainTitleItems[mainTitleId].title = mainTitle;
             });
         },
         deleteSubTitleItem: (mainTitleId: number, subTitleId: number) => {

@@ -8,8 +8,9 @@ import { useMainTitleItemStore } from "../common/useMainTitleItemStore";
 const MainMamoirTitle = (props: { id: number; editable: boolean }) => {
     const { id, editable } = props;
     const mainTitleItem = useMainTitleItemStore((state) => state.mainTitleItems[id]);
-    const { deleteMainTitleItem, updateMainTitleMode } = useMainTitleItemStore();
+    const { deleteMainTitleItem, updateMainTitleMode, updateMainTitle } = useMainTitleItemStore();
     const { title, subMemoirTitles } = mainTitleItem;
+    const [titleState, setTitleState] = useState(title);
     const [btnShow, setBtnShow] = useState(false);
 
     const handleMoreBtn = (e: React.MouseEvent) => {
@@ -27,11 +28,27 @@ const MainMamoirTitle = (props: { id: number; editable: boolean }) => {
         updateMainTitleMode(id);
     };
 
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTitleState(e.currentTarget.value);
+    };
+
+    const handlePressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            updateMainTitle(id, e.currentTarget.value);
+        }
+    };
+
     return (
         <div className={"title-container"}>
             {id > 0 && <hr />}
             <div className={"main-title-container"}>
-                <input className={"main-title-content"} value={title} disabled={mainTitleItem.mode === "VIEW"} />
+                <input
+                    className={"main-title-content"}
+                    value={titleState}
+                    disabled={mainTitleItem.mode === "VIEW"}
+                    onChange={handleOnChange}
+                    onKeyDown={handlePressEnter}
+                />
                 <div className={"btn-container"}>
                     {btnShow && <img src="/images/delete.svg" className={"delete-img"} onClick={handleDeleteBtn} />}
                     {btnShow && <img src="/images/edit.svg" className={"edit-img"} onClick={handleEditbtn} />}

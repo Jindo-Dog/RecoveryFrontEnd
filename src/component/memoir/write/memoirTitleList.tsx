@@ -8,13 +8,11 @@ const MemoirTitleList = ({ editable, width }: { editable: boolean; width: string
     const { mainTitleItems } = useMainTitleItemStore();
 
     return (
-        <div style={{ width: width }} className="memoir-div">
-            <div className="memoir-list">
-                {mainTitleItems.map((memoirTitle: MainTitleItem, idx: number) => {
-                    return <MainMamoirTitle key={idx} id={idx} editable={editable} />;
-                })}
-                {editable && <EditMainMemoirTitle />}
-            </div>
+        <div style={{ width: width }} className="memoir-container">
+            {mainTitleItems.map((memoirTitle: MainTitleItem, idx: number) => {
+                return <MainMamoirTitle key={idx} id={idx} editable={editable} />;
+            })}
+            {editable && <EditMainMemoirTitle />}
         </div>
     );
 };

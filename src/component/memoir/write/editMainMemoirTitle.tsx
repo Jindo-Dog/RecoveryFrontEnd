@@ -14,7 +14,7 @@ const EditMainMemoirTitle = () => {
     };
 
     return (
-        <div>
+        <div className={"main-edit-container"}>
             {mainTitleItems.length > 0 && <hr />}
             <input
                 type="text"

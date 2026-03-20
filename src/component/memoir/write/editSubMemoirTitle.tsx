@@ -1,7 +1,7 @@
 import { useMainTitleItemStore } from "../common/useMainTitleItemStore";
 
 type EditSubTitleProps = {
-    mainTitleId: number;
+    mainTitleId: string;
 };
 
 const EditSubTitle = (props: EditSubTitleProps) => {

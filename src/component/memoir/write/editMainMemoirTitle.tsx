@@ -2,7 +2,8 @@ import "./editMainMemoirTitle.scss";
 import { useMainTitleItemStore } from "../common/useMainTitleItemStore";
 
 const EditMainMemoirTitle = () => {
-    const { mainTitleItems, addMainTitle } = useMainTitleItemStore();
+    const mainTitleCount = useMainTitleItemStore((state) => state.mainTitleIds.length);
+    const addMainTitle = useMainTitleItemStore((state) => state.addMainTitle);
 
     const handleEnterEvent = (e: React.KeyboardEvent<HTMLInputElement>) => {
         const title = e.currentTarget.value;
@@ -15,7 +16,7 @@ const EditMainMemoirTitle = () => {
 
     return (
         <div className={"main-edit-container"}>
-            {mainTitleItems.length > 0 && <hr />}
+            {mainTitleCount > 0 && <hr />}
             <input
                 type="text"
                 className="edit-text"

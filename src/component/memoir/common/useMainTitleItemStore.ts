@@ -72,8 +72,7 @@ type MainTitleItemStore = {
     mainTitleIds: string[];
     mainTitlesById: Record<string, MainTitleItem>;
     subTitlesById: Record<string, SubTitleItem>;
-    addMainTitle: (mainTitle: string) => void;
-    addSubTitle: (mainTitleId: string, newSubTitle: string) => void;
+    addTitle: (kind: MemoirTitleKind, title: string, parentMainTitleId?: string) => void;
     deleteTitle: (kind: MemoirTitleKind, id: string) => void;
     toggleTitleMode: (kind: MemoirTitleKind, id: string) => void;
     updateTitle: (kind: MemoirTitleKind, id: string, title: string) => void;
@@ -82,20 +81,25 @@ type MainTitleItemStore = {
 export const useMainTitleItemStore = create<MainTitleItemStore>()(
     immer((set) => ({
         ...initialState,
-        addMainTitle: (mainTitle: string) =>
+        addTitle: (kind, title, parentMainTitleId) =>
             set((state) => {
-                const mainId = createId();
-                state.mainTitleIds.push(mainId);
-                state.mainTitlesById[mainId] = {
-                    id: mainId,
-                    title: mainTitle,
-                    mode: "VIEW",
-                    subTitleIds: [],
-                };
-            }),
-        addSubTitle: (mainTitleId, newSubTitle) =>
-            set((state) => {
-                const mainTitle = state.mainTitlesById[mainTitleId];
+                if (kind === "MAIN") {
+                    const mainId = createId();
+                    state.mainTitleIds.push(mainId);
+                    state.mainTitlesById[mainId] = {
+                        id: mainId,
+                        title,
+                        mode: "VIEW",
+                        subTitleIds: [],
+                    };
+                    return;
+                }
+
+                if (!parentMainTitleId) {
+                    return;
+                }
+
+                const mainTitle = state.mainTitlesById[parentMainTitleId];
                 if (!mainTitle) {
                     return;
                 }
@@ -104,9 +108,9 @@ export const useMainTitleItemStore = create<MainTitleItemStore>()(
                 mainTitle.subTitleIds.push(subId);
                 state.subTitlesById[subId] = {
                     id: subId,
-                    title: newSubTitle,
+                    title,
                     mode: "VIEW",
-                    parentMainTitleId: mainTitleId,
+                    parentMainTitleId,
                 };
             }),
         deleteTitle: (kind, id) =>

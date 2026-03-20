@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import type { MainTitleItem, MemoirState, MemoirTitleKind, SubTitleItem } from "./memoir.types";
+import type { AddTitlePayload, MainTitleItem, MemoirState, SubTitleItem, TitleTargetPayload, UpdateTitlePayload } from "./memoir.types";
 
 type LegacyMainTitleItem = {
     title: string;
@@ -72,34 +72,30 @@ type MainTitleItemStore = {
     mainTitleIds: string[];
     mainTitlesById: Record<string, MainTitleItem>;
     subTitlesById: Record<string, SubTitleItem>;
-    addTitle: (kind: MemoirTitleKind, title: string, parentMainTitleId?: string) => void;
-    deleteTitle: (kind: MemoirTitleKind, id: string) => void;
-    toggleTitleMode: (kind: MemoirTitleKind, id: string) => void;
-    updateTitle: (kind: MemoirTitleKind, id: string, title: string) => void;
+    addTitle: (payload: AddTitlePayload) => void;
+    deleteTitle: (payload: TitleTargetPayload) => void;
+    toggleTitleMode: (payload: TitleTargetPayload) => void;
+    updateTitle: (payload: UpdateTitlePayload) => void;
 };
 
 export const useMainTitleItemStore = create<MainTitleItemStore>()(
     immer((set) => ({
         ...initialState,
-        addTitle: (kind, title, parentMainTitleId) =>
+        addTitle: (payload) =>
             set((state) => {
-                if (kind === "MAIN") {
+                if (payload.kind === "MAIN") {
                     const mainId = createId();
                     state.mainTitleIds.push(mainId);
                     state.mainTitlesById[mainId] = {
                         id: mainId,
-                        title,
+                        title: payload.title,
                         mode: "VIEW",
                         subTitleIds: [],
                     };
                     return;
                 }
 
-                if (!parentMainTitleId) {
-                    return;
-                }
-
-                const mainTitle = state.mainTitlesById[parentMainTitleId];
+                const mainTitle = state.mainTitlesById[payload.parentMainTitleId];
                 if (!mainTitle) {
                     return;
                 }
@@ -108,15 +104,15 @@ export const useMainTitleItemStore = create<MainTitleItemStore>()(
                 mainTitle.subTitleIds.push(subId);
                 state.subTitlesById[subId] = {
                     id: subId,
-                    title,
+                    title: payload.title,
                     mode: "VIEW",
-                    parentMainTitleId,
+                    parentMainTitleId: payload.parentMainTitleId,
                 };
             }),
-        deleteTitle: (kind, id) =>
+        deleteTitle: (payload) =>
             set((state) => {
-                if (kind === "MAIN") {
-                    const mainTitle = state.mainTitlesById[id];
+                if (payload.kind === "MAIN") {
+                    const mainTitle = state.mainTitlesById[payload.id];
                     if (!mainTitle) {
                         return;
                     }
@@ -124,26 +120,26 @@ export const useMainTitleItemStore = create<MainTitleItemStore>()(
                     mainTitle.subTitleIds.forEach((subId) => {
                         delete state.subTitlesById[subId];
                     });
-                    delete state.mainTitlesById[id];
-                    state.mainTitleIds = state.mainTitleIds.filter((mainId) => mainId !== id);
+                    delete state.mainTitlesById[payload.id];
+                    state.mainTitleIds = state.mainTitleIds.filter((mainId) => mainId !== payload.id);
                     return;
                 }
 
-                const subTitle = state.subTitlesById[id];
+                const subTitle = state.subTitlesById[payload.id];
                 if (!subTitle) {
                     return;
                 }
 
                 const parent = state.mainTitlesById[subTitle.parentMainTitleId];
                 if (parent) {
-                    parent.subTitleIds = parent.subTitleIds.filter((subId) => subId !== id);
+                    parent.subTitleIds = parent.subTitleIds.filter((subId) => subId !== payload.id);
                 }
-                delete state.subTitlesById[id];
+                delete state.subTitlesById[payload.id];
             }),
-        toggleTitleMode: (kind, id) =>
+        toggleTitleMode: (payload) =>
             set((state) => {
-                if (kind === "MAIN") {
-                    const mainTitle = state.mainTitlesById[id];
+                if (payload.kind === "MAIN") {
+                    const mainTitle = state.mainTitlesById[payload.id];
                     if (!mainTitle) {
                         return;
                     }
@@ -152,26 +148,26 @@ export const useMainTitleItemStore = create<MainTitleItemStore>()(
                     return;
                 }
 
-                const subTitle = state.subTitlesById[id];
+                const subTitle = state.subTitlesById[payload.id];
                 if (!subTitle) {
                     return;
                 }
 
                 subTitle.mode = subTitle.mode === "VIEW" ? "EDIT" : "VIEW";
             }),
-        updateTitle: (kind, id, title) =>
+        updateTitle: (payload) =>
             set((state) => {
-                if (kind === "MAIN") {
-                    const mainTitle = state.mainTitlesById[id];
+                if (payload.kind === "MAIN") {
+                    const mainTitle = state.mainTitlesById[payload.id];
                     if (mainTitle) {
-                        mainTitle.title = title;
+                        mainTitle.title = payload.title;
                     }
                     return;
                 }
 
-                const subTitle = state.subTitlesById[id];
+                const subTitle = state.subTitlesById[payload.id];
                 if (subTitle) {
-                    subTitle.title = title;
+                    subTitle.title = payload.title;
                 }
             }),
     })),

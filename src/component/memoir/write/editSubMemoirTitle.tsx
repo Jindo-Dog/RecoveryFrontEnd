@@ -12,7 +12,7 @@ const EditSubTitle = (props: EditSubTitleProps) => {
     return (
         <EditMemoirTitleInput
             placeholder="소주제 (입력으로 활성화)"
-            onSubmit={(title) => addTitle("SUB", title, mainTitleId)}
+            onSubmit={(title) => addTitle({ kind: "SUB", title, parentMainTitleId: mainTitleId })}
         />
     );
 };

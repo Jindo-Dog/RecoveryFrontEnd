@@ -10,7 +10,7 @@ const EditMainMemoirTitle = () => {
             wrapperClassName="main-edit-container"
             showDivider={mainTitleCount > 0}
             placeholder="대주제 (입력으로 활성화)"
-            onSubmit={(title) => addTitle("MAIN", title)}
+            onSubmit={(title) => addTitle({ kind: "MAIN", title })}
         />
     );
 };

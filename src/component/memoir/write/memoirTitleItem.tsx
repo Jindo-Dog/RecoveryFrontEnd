@@ -31,22 +31,22 @@ const MemoirTitleItem = ({ kind, id, editable }: MemoirTitleItemProps) => {
 
     const handleDeleteBtn = () => {
         if (confirm("정말로 삭제하시겠습니까?")) {
-            deleteTitle(kind, id);
+            deleteTitle({ kind, id });
         }
     };
 
     const handleEditBtn = () => {
-        toggleTitleMode(kind, id);
+        toggleTitleMode({ kind, id });
     };
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        updateTitle(kind, id, e.currentTarget.value);
+        updateTitle({ kind, id, title: e.currentTarget.value });
     };
 
     const handlePressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
-            updateTitle(kind, id, e.currentTarget.value);
-            toggleTitleMode(kind, id);
+            updateTitle({ kind, id, title: e.currentTarget.value });
+            toggleTitleMode({ kind, id });
         }
     };
 

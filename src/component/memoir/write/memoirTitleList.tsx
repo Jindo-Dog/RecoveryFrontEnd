@@ -1,5 +1,5 @@
 import "./memoirTitleList.scss";
-import MainMamoirTitle from "./mainMemoirTitle.tsx";
+import MainMemoirTitle from "./mainMemoirTitle.tsx";
 import EditMainMemoirTitle from "./editMainMemoirTitle.tsx";
 import { useMainTitleItemStore } from "../common/useMainTitleItemStore.ts";
 
@@ -9,7 +9,7 @@ const MemoirTitleList = ({ editable, width }: { editable: boolean; width: string
     return (
         <div style={{ width: width }} className="memoir-container">
             {mainTitleIds.map((mainTitleId, idx) => {
-                return <MainMamoirTitle key={mainTitleId} mainTitleId={mainTitleId} idx={idx} editable={editable} />;
+                return <MainMemoirTitle key={mainTitleId} mainTitleId={mainTitleId} idx={idx} editable={editable} />;
             })}
             {editable && <EditMainMemoirTitle />}
         </div>

@@ -1,25 +1,21 @@
 @use "/src/styles/function" as *;
 @use "/src/styles/styles" as *;
 
-.memoir-div {
-    @include flex-center;
+.memoir-container {
+    display: flex;
     flex-direction: column;
-    width: rem(1280px);
+    width: 100%;
+    height: 100%;
     text-align: left;
-
-    .memoir-list {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: rem(562px);
-        overflow-y: auto;
-        border: rem(1px) solid black;
-        padding: rem(5px);
-        gap: rem(5px);
-    }
+    border: $border;
+    border-radius: rem(10px);
+    padding: rem(5px);
+    overflow-y: auto;
+    min-height: 0;
+    gap: rem(30px);
 
     hr {
-        margin: rem(10px) 0;
+        margin: 0;
     }
 
     .edit-text {

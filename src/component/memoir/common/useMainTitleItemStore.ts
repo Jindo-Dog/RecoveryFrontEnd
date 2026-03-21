@@ -1,90 +1,174 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import type { MainTitleItem } from "./memoir.types";
+import type { AddTitlePayload, MainTitleItem, MemoirState, SubTitleItem, TitleTargetPayload, UpdateTitlePayload } from "./memoir.types";
 
-const data: MainTitleItem[] = [
+type LegacyMainTitleItem = {
+    title: string;
+    subMemoirTitles: { title: string }[];
+};
+
+const data: LegacyMainTitleItem[] = [
     {
         title: "2026/01/01 회고 - 오늘 공부한 것",
-        mode: "VIEW",
         subMemoirTitles: [
             {
                 title: "TSX란?",
-                mode: "VIEW",
             },
         ],
     },
     {
         title: "2026/03/09 회고 - 오늘의 나의 일기",
-        mode: "VIEW",
         subMemoirTitles: [
             {
                 title: "문구점을 갔다.",
-                mode: "VIEW",
             },
             {
                 title: "산책을 갔다.",
-                mode: "VIEW",
             },
         ],
     },
 ];
 
+const createId = () => {
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+        return crypto.randomUUID();
+    }
+    return `memoir-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+};
+
+const normalizeInitialData = (legacyData: LegacyMainTitleItem[]): MemoirState => {
+    const mainTitleIds: string[] = [];
+    const mainTitlesById: Record<string, MainTitleItem> = {};
+    const subTitlesById: Record<string, SubTitleItem> = {};
+
+    legacyData.forEach((mainItem) => {
+        const mainId = createId();
+        const subTitleIds = mainItem.subMemoirTitles.map((subItem) => {
+            const subId = createId();
+            subTitlesById[subId] = {
+                id: subId,
+                title: subItem.title,
+                mode: "VIEW",
+                parentMainTitleId: mainId,
+            };
+            return subId;
+        });
+
+        mainTitleIds.push(mainId);
+        mainTitlesById[mainId] = {
+            id: mainId,
+            title: mainItem.title,
+            mode: "VIEW",
+            subTitleIds,
+        };
+    });
+
+    return { mainTitleIds, mainTitlesById, subTitlesById };
+};
+
+const initialState = normalizeInitialData(data);
+
 type MainTitleItemStore = {
-    mainTitleItems: MainTitleItem[];
-    addSubTitle: (mainTitleId: number, newSubTitle: string) => void;
-    addMainTitle: (mainTitle: string) => void;
-    setMainTitleItems: (mainTitleItems: MainTitleItem[]) => void;
-    deleteMainTitleItem: (id: number) => void;
-    updateMainTitleMode: (id: number) => void;
-    updateMainTitle: (id: number, title: string) => void;
-    deleteSubTitleItem: (mainTitleId: number, id: number) => void;
-    updateSubTitleMode: (mainTitleId: number, id: number) => void;
-    updateSubTitle: (mainTitleId: number, id: number, title: string) => void;
+    mainTitleIds: string[];
+    mainTitlesById: Record<string, MainTitleItem>;
+    subTitlesById: Record<string, SubTitleItem>;
+    addTitle: (payload: AddTitlePayload) => void;
+    deleteTitle: (payload: TitleTargetPayload) => void;
+    toggleTitleMode: (payload: TitleTargetPayload) => void;
+    updateTitle: (payload: UpdateTitlePayload) => void;
 };
 
 export const useMainTitleItemStore = create<MainTitleItemStore>()(
     immer((set) => ({
-        mainTitleItems: data,
-        addSubTitle: (mainTitleId, newSubTitle) =>
+        ...initialState,
+        addTitle: (payload) =>
             set((state) => {
-                state.mainTitleItems[mainTitleId].subMemoirTitles.push({ title: newSubTitle, mode: "VIEW" });
+                if (payload.kind === "MAIN") {
+                    const mainId = createId();
+                    state.mainTitleIds.push(mainId);
+                    state.mainTitlesById[mainId] = {
+                        id: mainId,
+                        title: payload.title,
+                        mode: "VIEW",
+                        subTitleIds: [],
+                    };
+                    return;
+                }
+
+                const mainTitle = state.mainTitlesById[payload.parentMainTitleId];
+                if (!mainTitle) {
+                    return;
+                }
+
+                const subId = createId();
+                mainTitle.subTitleIds.push(subId);
+                state.subTitlesById[subId] = {
+                    id: subId,
+                    title: payload.title,
+                    mode: "VIEW",
+                    parentMainTitleId: payload.parentMainTitleId,
+                };
             }),
-        addMainTitle: (mainTitle: string) =>
+        deleteTitle: (payload) =>
             set((state) => {
-                state.mainTitleItems.push({ title: mainTitle, mode: "VIEW", subMemoirTitles: [] });
+                if (payload.kind === "MAIN") {
+                    const mainTitle = state.mainTitlesById[payload.id];
+                    if (!mainTitle) {
+                        return;
+                    }
+
+                    mainTitle.subTitleIds.forEach((subId) => {
+                        delete state.subTitlesById[subId];
+                    });
+                    delete state.mainTitlesById[payload.id];
+                    state.mainTitleIds = state.mainTitleIds.filter((mainId) => mainId !== payload.id);
+                    return;
+                }
+
+                const subTitle = state.subTitlesById[payload.id];
+                if (!subTitle) {
+                    return;
+                }
+
+                const parent = state.mainTitlesById[subTitle.parentMainTitleId];
+                if (parent) {
+                    parent.subTitleIds = parent.subTitleIds.filter((subId) => subId !== payload.id);
+                }
+                delete state.subTitlesById[payload.id];
             }),
-        setMainTitleItems: (mainTitleItems: MainTitleItem[]) => set({ mainTitleItems }),
-        deleteMainTitleItem: (mainTitleId: number) =>
+        toggleTitleMode: (payload) =>
             set((state) => {
-                state.mainTitleItems.splice(mainTitleId, 1);
+                if (payload.kind === "MAIN") {
+                    const mainTitle = state.mainTitlesById[payload.id];
+                    if (!mainTitle) {
+                        return;
+                    }
+
+                    mainTitle.mode = mainTitle.mode === "VIEW" ? "EDIT" : "VIEW";
+                    return;
+                }
+
+                const subTitle = state.subTitlesById[payload.id];
+                if (!subTitle) {
+                    return;
+                }
+
+                subTitle.mode = subTitle.mode === "VIEW" ? "EDIT" : "VIEW";
             }),
-        updateMainTitleMode: (mainTitleId: number) => {
+        updateTitle: (payload) =>
             set((state) => {
-                const mode = state.mainTitleItems[mainTitleId].mode;
-                state.mainTitleItems[mainTitleId].mode = mode === "VIEW" ? "EDIT" : "VIEW";
-            });
-        },
-        updateMainTitle: (mainTitleId: number, mainTitle: string) => {
-            set((state) => {
-                state.mainTitleItems[mainTitleId].title = mainTitle;
-            });
-        },
-        deleteSubTitleItem: (mainTitleId: number, subTitleId: number) => {
-            set((state) => {
-                state.mainTitleItems[mainTitleId].subMemoirTitles.splice(subTitleId, 1);
-            });
-        },
-        updateSubTitleMode: (mainTitleId: number, subTitleId: number) => {
-            set((state) => {
-                const subTitleItem = state.mainTitleItems[mainTitleId].subMemoirTitles[subTitleId];
-                subTitleItem.mode = subTitleItem.mode === "VIEW" ? "EDIT" : "VIEW";
-            });
-        },
-        updateSubTitle: (mainTitleId: number, subTitleId: number, subTitle: string) => {
-            set((state) => {
-                const subTitleItem = state.mainTitleItems[mainTitleId].subMemoirTitles[subTitleId];
-                subTitleItem.title = subTitle;
-            });
-        },
+                if (payload.kind === "MAIN") {
+                    const mainTitle = state.mainTitlesById[payload.id];
+                    if (mainTitle) {
+                        mainTitle.title = payload.title;
+                    }
+                    return;
+                }
+
+                const subTitle = state.subTitlesById[payload.id];
+                if (subTitle) {
+                    subTitle.title = payload.title;
+                }
+            }),
     })),
 );

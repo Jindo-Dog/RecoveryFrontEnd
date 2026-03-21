@@ -1,32 +1,20 @@
 import { useMainTitleItemStore } from "../common/useMainTitleItemStore";
+import EditMemoirTitleInput from "./editMemoirTitleInput";
 
 type EditSubTitleProps = {
-    mainTitleId: number;
+    mainTitleId: string;
 };
 
 const EditSubTitle = (props: EditSubTitleProps) => {
     const { mainTitleId } = props;
-    const { addSubTitle } = useMainTitleItemStore();
-
-    const handleEnterEvent = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const title = e.currentTarget.value;
-
-        if (e.key === "Enter" && title.length > 0) {
-            addSubTitle(mainTitleId, title);
-            e.currentTarget.value = "";
-        }
-    };
+    const addTitle = useMainTitleItemStore((state) => state.addTitle);
 
     return (
-        <div>
-            <input
-                type="text"
-                className="edit-text"
-                placeholder="소주제 (입력으로 활성화)"
-                onKeyDown={handleEnterEvent}
-                required
-            />
-        </div>
+        <EditMemoirTitleInput
+            placeholder="소주제 (입력으로 활성화)"
+            onSubmit={(title) => addTitle({ kind: "SUB", title, parentMainTitleId: mainTitleId })}
+            wrapperClassName={"sub-edit-container"}
+        />
     );
 };
 

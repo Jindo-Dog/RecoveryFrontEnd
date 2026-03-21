@@ -1,26 +1,23 @@
-import "./mainMemoirTitle.scss";
-import type { SubTitleItem } from "../common/memoir.types";
-import SubMemoirTitle from "./subMemoirTitle";
+import "./memoirTitle.scss";
+import MemoirTitleItem from "./memoirTitleItem";
 import EditSubTitle from "./editSubMemoirTitle";
 import { useMainTitleItemStore } from "../common/useMainTitleItemStore";
 
-const MainMamoirTitle = (props: { id: number; editable: boolean }) => {
-    const { id, editable } = props;
-    const mainTitleItem = useMainTitleItemStore((state) => state.mainTitleItems[id]);
-    const { title, subMemoirTitles } = mainTitleItem;
+const MainMemoirTitle = (props: { mainTitleId: string; idx: number; editable: boolean }) => {
+    const { mainTitleId, editable } = props;
+    const subTitleIds = useMainTitleItemStore((state) => state.mainTitlesById[mainTitleId]?.subTitleIds ?? []);
 
     return (
-        <div className={"title-div"}>
-            {id > 0 && <hr />}
-            <div className={"main-title"}>{title}</div>
-            <div className={"sub-title-div"}>
-                {subMemoirTitles.map((subMemoirTitle: SubTitleItem, idx: number) => {
-                    return <SubMemoirTitle key={idx} title={subMemoirTitle.title} />;
+        <div className={"title-container"}>
+            <MemoirTitleItem kind="MAIN" id={mainTitleId} editable={editable} />
+            <div className={"sub-title-container"}>
+                {subTitleIds.map((subTitleId) => {
+                    return <MemoirTitleItem key={subTitleId} kind="SUB" id={subTitleId} editable={editable} />;
                 })}
-                {editable && <EditSubTitle mainTitleId={id} />}
+                {editable && <EditSubTitle mainTitleId={mainTitleId} />}
             </div>
         </div>
     );
 };
 
-export default MainMamoirTitle;
+export default MainMemoirTitle;

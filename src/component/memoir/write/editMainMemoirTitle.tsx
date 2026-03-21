@@ -1,29 +1,17 @@
-import "./editMainMemoirTitle.scss";
 import { useMainTitleItemStore } from "../common/useMainTitleItemStore";
+import EditMemoirTitleInput from "./editMemoirTitleInput";
 
 const EditMainMemoirTitle = () => {
-    const { mainTitleItems, addMainTitle } = useMainTitleItemStore();
-
-    const handleEnterEvent = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const title = e.currentTarget.value;
-
-        if (e.key === "Enter" && title.length > 0) {
-            addMainTitle(title);
-            e.currentTarget.value = "";
-        }
-    };
+    const mainTitleCount = useMainTitleItemStore((state) => state.mainTitleIds.length);
+    const addTitle = useMainTitleItemStore((state) => state.addTitle);
 
     return (
-        <div>
-            {mainTitleItems.length > 0 && <hr />}
-            <input
-                type="text"
-                className="edit-text"
-                placeholder="대주제 (입력으로 활성화)"
-                onKeyDown={handleEnterEvent}
-                required
-            />
-        </div>
+        <EditMemoirTitleInput
+            wrapperClassName="main-edit-container"
+            showDivider={mainTitleCount > 0}
+            placeholder="대주제 (입력으로 활성화)"
+            onSubmit={(title) => addTitle({ kind: "MAIN", title })}
+        />
     );
 };
 

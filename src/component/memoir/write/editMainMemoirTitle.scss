@@ -1,10 +1,24 @@
+@use "/src/styles/styles" as *;
 @use "/src/styles/function" as *;
 
-.edit-text {
-    border: none;
+.main-edit-container {
     width: 100%;
-    height: rem(60px);
-    text-align: center;
+
+    .edit-text {
+        width: 100%;
+        height: rem(60px);
+        text-align: center;
+        background-color: transparent;
+    }
+}
+
+.sub-edit-container {
+    .edit-text {
+        width: 100%;
+        height: rem(60px);
+        text-align: center;
+        background-color: transparent;
+    }
 }
 
 input:focus::placeholder {

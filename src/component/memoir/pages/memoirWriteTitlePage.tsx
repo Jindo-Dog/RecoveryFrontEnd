@@ -12,12 +12,12 @@ const MemoirWriteTitlePage = () => {
                     <span>오늘의 나를 회고해보세요</span>
                 </div>
                 <MemoirTitleList editable={true} width={"1270px"} />
+                <div className="progress-circles">
+                    <div className="first-circle"></div>
+                    <div className="second-circle"></div>
+                </div>
             </div>
 
-            <div className="progress-circles">
-                <div className="first-circle"></div>
-                <div className="second-circle"></div>
-            </div>
             <div className={"btn-footer"}>
                 <Link to="/memoir/improvement">
                     <button className={"improvement-btn"}>개선점 입력하기</button>

@@ -7,12 +7,7 @@ type EditMemoirTitleInputProps = {
     showDivider?: boolean;
 };
 
-const EditMemoirTitleInput = ({
-    placeholder,
-    onSubmit,
-    wrapperClassName,
-    showDivider = false,
-}: EditMemoirTitleInputProps) => {
+const EditMemoirTitleInput = ({ placeholder, onSubmit, wrapperClassName }: EditMemoirTitleInputProps) => {
     const handleEnterEvent = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key !== "Enter") {
             return;
@@ -29,17 +24,9 @@ const EditMemoirTitleInput = ({
 
     return (
         <div className={wrapperClassName}>
-            {showDivider && <hr />}
-            <input
-                type="text"
-                className="edit-text"
-                placeholder={placeholder}
-                onKeyDown={handleEnterEvent}
-                required
-            />
+            <input type="text" className="edit-text" placeholder={placeholder} onKeyDown={handleEnterEvent} required />
         </div>
     );
 };
 
 export default EditMemoirTitleInput;
-

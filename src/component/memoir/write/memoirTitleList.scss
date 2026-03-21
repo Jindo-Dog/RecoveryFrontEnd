@@ -7,13 +7,15 @@
     width: 100%;
     height: 100%;
     text-align: left;
-    border: rem(1px) solid black;
+    border: $border;
+    border-radius: rem(10px);
     padding: rem(5px);
     overflow-y: auto;
     min-height: 0;
+    gap: rem(30px);
 
     hr {
-        margin: rem(10px) 0;
+        margin: 0;
     }
 
     .edit-text {

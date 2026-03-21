@@ -1,5 +1,4 @@
-import "./mainMemoirTitle.scss";
-import "./subMemoirTitle.scss";
+import "./memoirTitle.scss";
 import { useState } from "react";
 import type { MemoirTitleKind } from "../common/memoir.types";
 import { useMainTitleItemStore } from "../common/useMainTitleItemStore";
@@ -64,7 +63,9 @@ const MemoirTitleItem = ({ kind, id, editable }: MemoirTitleItemProps) => {
                     {btnShow && (
                         <img src="/images/delete.svg" alt="delete" className={"delete-img"} onClick={handleDeleteBtn} />
                     )}
-                    {btnShow && <img src="/images/edit.svg" alt="edit" className={"edit-img"} onClick={handleEditBtn} />}
+                    {btnShow && (
+                        <img src="/images/edit.svg" alt="edit" className={"edit-img"} onClick={handleEditBtn} />
+                    )}
                     <img src="/images/more.svg" alt="more" className={"more-img"} onClick={handleMoreBtn} />
                 </div>
             )}
@@ -73,5 +74,3 @@ const MemoirTitleItem = ({ kind, id, editable }: MemoirTitleItemProps) => {
 };
 
 export default MemoirTitleItem;
-
-

@@ -6,6 +6,7 @@ type MemoirTitleBase = {
     id: string;
     title: string;
     mode: Mode;
+    improvement: string;
 };
 
 type MainTitleItem = MemoirTitleBase & {

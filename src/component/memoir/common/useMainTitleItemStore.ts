@@ -1,29 +1,42 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import type { AddTitlePayload, MainTitleItem, MemoirState, SubTitleItem, TitleTargetPayload, UpdateTitlePayload } from "./memoir.types";
+import type {
+    AddTitlePayload,
+    MainTitleItem,
+    MemoirState,
+    SubTitleItem,
+    TitleTargetPayload,
+    UpdateTitlePayload,
+} from "./memoir.types";
 
 type LegacyMainTitleItem = {
     title: string;
-    subMemoirTitles: { title: string }[];
+    improvement: string;
+    subMemoirTitles: { title: string; improvement: string }[];
 };
 
 const data: LegacyMainTitleItem[] = [
     {
         title: "2026/01/01 회고 - 오늘 공부한 것",
+        improvement: "오늘은 tsx를 공부했다.",
         subMemoirTitles: [
             {
                 title: "TSX란?",
+                improvement: "TSX는 Typescript를 활용한 JSX컴포넌트입니다.",
             },
         ],
     },
     {
         title: "2026/03/09 회고 - 오늘의 나의 일기",
+        improvement: "오늘의 일상 ㅎㅎ",
         subMemoirTitles: [
             {
                 title: "문구점을 갔다.",
+                improvement: "",
             },
             {
                 title: "산책을 갔다.",
+                improvement: "",
             },
         ],
     },
@@ -49,6 +62,7 @@ const normalizeInitialData = (legacyData: LegacyMainTitleItem[]): MemoirState =>
                 id: subId,
                 title: subItem.title,
                 mode: "VIEW",
+                improvement: subItem.improvement,
                 parentMainTitleId: mainId,
             };
             return subId;
@@ -59,6 +73,7 @@ const normalizeInitialData = (legacyData: LegacyMainTitleItem[]): MemoirState =>
             id: mainId,
             title: mainItem.title,
             mode: "VIEW",
+            improvement: mainItem.improvement,
             subTitleIds,
         };
     });
@@ -90,6 +105,7 @@ export const useMainTitleItemStore = create<MainTitleItemStore>()(
                         id: mainId,
                         title: payload.title,
                         mode: "VIEW",
+                        improvement: "",
                         subTitleIds: [],
                     };
                     return;
@@ -106,6 +122,7 @@ export const useMainTitleItemStore = create<MainTitleItemStore>()(
                     id: subId,
                     title: payload.title,
                     mode: "VIEW",
+                    improvement: "",
                     parentMainTitleId: payload.parentMainTitleId,
                 };
             }),

@@ -2,9 +2,23 @@ import "./memoirImprovementPage.scss";
 import MemoirTitleList from "../write/memoirTitleList";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useMainTitleItemStore } from "../common/useMainTitleItemStore.ts";
+import type { TitleTargetPayload } from "../common/memoir.types.ts";
 
 const MemoirImprovementPage = () => {
     const [feedbackCnt] = useState(0);
+    const { mainTitlesById, subTitlesById } = useMainTitleItemStore();
+    // improvementContent를 빈 문자열로 초기화하고 textarea를 제어 컴포넌트로 사용합니다.
+    const [improvementContent, setImprovementContent] = useState<string>("");
+
+    const handleItemClick = (payload: TitleTargetPayload) => {
+        const { id, kind } = payload;
+        if (kind === "MAIN") {
+            setImprovementContent(mainTitlesById[id]?.improvement || "");
+        } else {
+            setImprovementContent(subTitlesById[id]?.improvement || "");
+        }
+    };
 
     return (
         <section className={"improvement-section"}>
@@ -15,13 +29,22 @@ const MemoirImprovementPage = () => {
                     <div className="memoir-title">
                         <span>오늘 내게 있었던 일</span>
                     </div>
-                    <MemoirTitleList editable={false} width={"625px"} />
+                    <MemoirTitleList
+                        editable={false}
+                        width={"625px"}
+                        selectHook={(payload) => handleItemClick(payload)}
+                    />
                 </div>
                 <div className={"right-box"}>
                     <div className="memoir-title">
                         <span>개선점</span>
                     </div>
-                    <textarea placeholder="개선점을 입력해주세요" className={"improvement-editor"} />
+                    <textarea
+                        placeholder="개선점을 입력해주세요"
+                        className={"improvement-editor"}
+                        value={improvementContent}
+                        onChange={(e) => setImprovementContent(e.currentTarget.value)}
+                    />
                 </div>
             </div>
 

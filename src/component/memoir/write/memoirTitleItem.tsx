@@ -1,15 +1,16 @@
 import "./memoirTitle.scss";
 import { useState } from "react";
-import type { MemoirTitleKind } from "../common/memoir.types";
+import type { MemoirTitleKind, TitleTargetPayload } from "../common/memoir.types";
 import { useMainTitleItemStore } from "../common/useMainTitleItemStore";
 
 type MemoirTitleItemProps = {
     kind: MemoirTitleKind;
     id: string;
     editable: boolean;
+    selectHook: (payload: TitleTargetPayload) => void;
 };
 
-const MemoirTitleItem = ({ kind, id, editable }: MemoirTitleItemProps) => {
+const MemoirTitleItem = ({ kind, id, editable, selectHook }: MemoirTitleItemProps) => {
     const titleItem = useMainTitleItemStore((state) =>
         kind === "MAIN" ? state.mainTitlesById[id] : state.subTitlesById[id],
     );
@@ -28,13 +29,15 @@ const MemoirTitleItem = ({ kind, id, editable }: MemoirTitleItemProps) => {
         setBtnShow((prev) => !prev);
     };
 
-    const handleDeleteBtn = () => {
+    const handleDeleteBtn = (e: React.MouseEvent) => {
+        e.stopPropagation();
         if (confirm("정말로 삭제하시겠습니까?")) {
             deleteTitle({ kind, id });
         }
     };
 
-    const handleEditBtn = () => {
+    const handleEditBtn = (e: React.MouseEvent) => {
+        e.stopPropagation();
         toggleTitleMode({ kind, id });
     };
 
@@ -49,12 +52,26 @@ const MemoirTitleItem = ({ kind, id, editable }: MemoirTitleItemProps) => {
         }
     };
 
+    const handleOnClick = () => {
+        console.log("MemoirTitleItem clicked ->", { kind, id, title: titleItem.title });
+        selectHook({ kind, id });
+    };
+
     return (
-        <div className={containerClass}>
+        <div
+            className={containerClass}
+            onClick={handleOnClick}
+            onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    handleOnClick();
+                }
+            }}
+        >
             <input
                 className={contentClass}
                 value={titleItem.title}
-                disabled={titleItem.mode === "VIEW"}
+                readOnly={titleItem.mode === "VIEW"}
+                style={titleItem.mode === "VIEW" ? { pointerEvents: "none" } : undefined}
                 onChange={handleOnChange}
                 onKeyDown={handlePressEnter}
             />

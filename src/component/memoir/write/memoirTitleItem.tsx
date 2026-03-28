@@ -1,5 +1,5 @@
 import "./memoirTitle.scss";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { MemoirTitleKind, TitleTargetPayload } from "../common/memoir.types";
 import { useMainTitleItemStore } from "../common/useMainTitleItemStore";
 
@@ -16,8 +16,16 @@ const MemoirTitleItem = (props: MemoirTitleItemProps) => {
     const titleItem = useMainTitleItemStore((state) =>
         kind === "MAIN" ? state.mainTitlesById[id] : state.subTitlesById[id],
     );
-    const { deleteTitle, toggleTitleMode, updateTitle } = useMainTitleItemStore();
+    const { deleteTitle, updateTitle } = useMainTitleItemStore();
     const [btnShow, setBtnShow] = useState(false);
+    const [mode, setMode] = useState<"VIEW" | "EDIT">("VIEW");
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (mode === "EDIT") {
+            inputRef.current?.focus();
+        }
+    }, [mode]);
 
     if (!titleItem) {
         return null;
@@ -40,7 +48,7 @@ const MemoirTitleItem = (props: MemoirTitleItemProps) => {
 
     const handleEditBtn = (e: React.MouseEvent) => {
         e.stopPropagation();
-        toggleTitleMode({ kind, id });
+        setMode(mode === "EDIT" ? "VIEW" : "EDIT");
     };
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +58,8 @@ const MemoirTitleItem = (props: MemoirTitleItemProps) => {
     const handlePressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             updateTitle({ kind, id, title: e.currentTarget.value });
-            toggleTitleMode({ kind, id });
+            setMode(mode === "EDIT" ? "VIEW" : "EDIT");
+            e.currentTarget.blur();
         }
     };
 
@@ -70,9 +79,10 @@ const MemoirTitleItem = (props: MemoirTitleItemProps) => {
         >
             <input
                 className={contentClass + (selectedTitleId === id ? " selected" : "")}
+                ref={inputRef}
                 value={titleItem.title}
-                readOnly={titleItem.mode === "VIEW"}
-                style={titleItem.mode === "VIEW" ? { pointerEvents: "none" } : undefined}
+                readOnly={mode === "VIEW"}
+                style={mode === "VIEW" ? { pointerEvents: "none" } : undefined}
                 onChange={handleOnChange}
                 onKeyDown={handlePressEnter}
             />

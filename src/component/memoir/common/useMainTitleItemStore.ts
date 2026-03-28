@@ -61,7 +61,6 @@ const normalizeInitialData = (legacyData: LegacyMainTitleItem[]): MemoirState =>
             subTitlesById[subId] = {
                 id: subId,
                 title: subItem.title,
-                mode: "VIEW",
                 improvement: subItem.improvement,
                 parentMainTitleId: mainId,
             };
@@ -72,7 +71,6 @@ const normalizeInitialData = (legacyData: LegacyMainTitleItem[]): MemoirState =>
         mainTitlesById[mainId] = {
             id: mainId,
             title: mainItem.title,
-            mode: "VIEW",
             improvement: mainItem.improvement,
             subTitleIds,
         };
@@ -89,7 +87,6 @@ type MainTitleItemStore = {
     subTitlesById: Record<string, SubTitleItem>;
     addTitle: (payload: AddTitlePayload) => void;
     deleteTitle: (payload: TitleTargetPayload) => void;
-    toggleTitleMode: (payload: TitleTargetPayload) => void;
     updateTitle: (payload: UpdateTitlePayload) => void;
 };
 
@@ -104,7 +101,6 @@ export const useMainTitleItemStore = create<MainTitleItemStore>()(
                     state.mainTitlesById[mainId] = {
                         id: mainId,
                         title: payload.title,
-                        mode: "VIEW",
                         improvement: "",
                         subTitleIds: [],
                     };
@@ -121,7 +117,6 @@ export const useMainTitleItemStore = create<MainTitleItemStore>()(
                 state.subTitlesById[subId] = {
                     id: subId,
                     title: payload.title,
-                    mode: "VIEW",
                     improvement: "",
                     parentMainTitleId: payload.parentMainTitleId,
                 };
@@ -152,25 +147,6 @@ export const useMainTitleItemStore = create<MainTitleItemStore>()(
                     parent.subTitleIds = parent.subTitleIds.filter((subId) => subId !== payload.id);
                 }
                 delete state.subTitlesById[payload.id];
-            }),
-        toggleTitleMode: (payload) =>
-            set((state) => {
-                if (payload.kind === "MAIN") {
-                    const mainTitle = state.mainTitlesById[payload.id];
-                    if (!mainTitle) {
-                        return;
-                    }
-
-                    mainTitle.mode = mainTitle.mode === "VIEW" ? "EDIT" : "VIEW";
-                    return;
-                }
-
-                const subTitle = state.subTitlesById[payload.id];
-                if (!subTitle) {
-                    return;
-                }
-
-                subTitle.mode = subTitle.mode === "VIEW" ? "EDIT" : "VIEW";
             }),
         updateTitle: (payload) =>
             set((state) => {

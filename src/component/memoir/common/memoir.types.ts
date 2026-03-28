@@ -5,7 +5,6 @@ type MemoirTitleKind = "MAIN" | "SUB";
 type MemoirTitleBase = {
     id: string;
     title: string;
-    mode: Mode;
     improvement: string;
 };
 

@@ -122,8 +122,9 @@
                 background: none;
                 position: relative;
                 z-index: 1;
+
                 abbr {
-                    color: $white-color;
+                    color: $white-color !important;
                     position: relative;
                     z-index: 2;
                 }
@@ -158,9 +159,10 @@
                 width: rem(7px);
                 height: rem(7px);
                 position: absolute;
-                top: 75%;
+                top: 68%;
                 left: 50%;
                 transform: translateX(-50%);
+                z-index: 3;
             }
         }
 

@@ -9,10 +9,11 @@ type MemoirTitleList = {
     editable: boolean;
     width: string;
     selectHook: (id: TitleTargetPayload) => void;
+    selectedTitleId?: string | null;
 };
 
 const MemoirTitleList = (props: MemoirTitleList) => {
-    const { editable, width, selectHook } = props;
+    const { editable, width, selectHook, selectedTitleId } = props;
     const mainTitleIds = useMainTitleItemStore((state) => state.mainTitleIds);
 
     return (
@@ -25,6 +26,7 @@ const MemoirTitleList = (props: MemoirTitleList) => {
                         idx={idx}
                         editable={editable}
                         selectHook={selectHook}
+                        selectedTitleId={selectedTitleId}
                     />
                     {idx < mainTitleIds.length - 1 && <hr />}
                 </React.Fragment>

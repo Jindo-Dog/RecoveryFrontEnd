@@ -9,15 +9,22 @@ type MainMemoirTitleProps = {
     idx: number;
     editable: boolean;
     selectHook: (id: TitleTargetPayload) => void;
+    selectedTitleId?: string | null;
 };
 
 const MainMemoirTitle = (props: MainMemoirTitleProps) => {
-    const { mainTitleId, editable, selectHook } = props;
+    const { mainTitleId, editable, selectHook, selectedTitleId } = props;
     const subTitleIds = useMainTitleItemStore((state) => state.mainTitlesById[mainTitleId]?.subTitleIds ?? []);
 
     return (
         <div className={"title-container"}>
-            <MemoirTitleItem kind="MAIN" id={mainTitleId} editable={editable} selectHook={selectHook} />
+            <MemoirTitleItem
+                kind="MAIN"
+                id={mainTitleId}
+                editable={editable}
+                selectHook={selectHook}
+                selectedTitleId={selectedTitleId}
+            />
             <div className={"sub-title-container"}>
                 {subTitleIds.map((subTitleId) => {
                     return (
@@ -27,6 +34,7 @@ const MainMemoirTitle = (props: MainMemoirTitleProps) => {
                             id={subTitleId}
                             editable={editable}
                             selectHook={selectHook}
+                            selectedTitleId={selectedTitleId}
                         />
                     );
                 })}

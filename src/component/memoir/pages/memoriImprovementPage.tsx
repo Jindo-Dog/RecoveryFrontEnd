@@ -8,8 +8,8 @@ import type { TitleTargetPayload } from "../common/memoir.types.ts";
 const MemoirImprovementPage = () => {
     const [feedbackCnt] = useState(0);
     const { mainTitlesById, subTitlesById } = useMainTitleItemStore();
-    // improvementContent를 빈 문자열로 초기화하고 textarea를 제어 컴포넌트로 사용합니다.
     const [improvementContent, setImprovementContent] = useState<string>("");
+    const [selectedTitleId, setSelectedTitleId] = useState<string | null>(null);
 
     const handleItemClick = (payload: TitleTargetPayload) => {
         const { id, kind } = payload;
@@ -18,6 +18,8 @@ const MemoirImprovementPage = () => {
         } else {
             setImprovementContent(subTitlesById[id]?.improvement || "");
         }
+        setSelectedTitleId(id);
+        console.log(id);
     };
 
     return (
@@ -33,6 +35,7 @@ const MemoirImprovementPage = () => {
                         editable={false}
                         width={"625px"}
                         selectHook={(payload) => handleItemClick(payload)}
+                        selectedTitleId={selectedTitleId}
                     />
                 </div>
                 <div className={"right-box"}>

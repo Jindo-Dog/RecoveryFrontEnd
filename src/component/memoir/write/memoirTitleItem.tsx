@@ -8,9 +8,11 @@ type MemoirTitleItemProps = {
     id: string;
     editable: boolean;
     selectHook: (payload: TitleTargetPayload) => void;
+    selectedTitleId?: string | null;
 };
 
-const MemoirTitleItem = ({ kind, id, editable, selectHook }: MemoirTitleItemProps) => {
+const MemoirTitleItem = (props: MemoirTitleItemProps) => {
+    const { kind, id, editable, selectHook, selectedTitleId } = props;
     const titleItem = useMainTitleItemStore((state) =>
         kind === "MAIN" ? state.mainTitlesById[id] : state.subTitlesById[id],
     );
@@ -53,7 +55,6 @@ const MemoirTitleItem = ({ kind, id, editable, selectHook }: MemoirTitleItemProp
     };
 
     const handleOnClick = () => {
-        console.log("MemoirTitleItem clicked ->", { kind, id, title: titleItem.title });
         selectHook({ kind, id });
     };
 
@@ -68,7 +69,7 @@ const MemoirTitleItem = ({ kind, id, editable, selectHook }: MemoirTitleItemProp
             }}
         >
             <input
-                className={contentClass}
+                className={contentClass + (selectedTitleId === id ? " selected" : "")}
                 value={titleItem.title}
                 readOnly={titleItem.mode === "VIEW"}
                 style={titleItem.mode === "VIEW" ? { pointerEvents: "none" } : undefined}

@@ -6,6 +6,8 @@ const MemoirsList = () => {
             <a href={"/signup"}>signup</a>
             <br />
             <a href={"/memoir/write"}>memoir</a>
+            <br />
+            <a href={"/calender"}>calender</a>
         </div>
     );
 };

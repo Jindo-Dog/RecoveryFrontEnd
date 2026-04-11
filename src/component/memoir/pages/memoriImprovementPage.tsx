@@ -2,21 +2,21 @@ import "./memoirImprovementPage.scss";
 import MemoirTitleList from "../write/memoirTitleList";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useMainTitleItemStore } from "../common/useMainTitleItemStore.ts";
+import { useImprovementItemStore } from "../common/useMainTitleItemStore.ts";
 import type { TitleTargetPayload } from "../common/memoir.types.ts";
 
 const MemoirImprovementPage = () => {
     const [feedbackCnt] = useState(0);
-    const { mainTitlesById, subTitlesById } = useMainTitleItemStore();
+    const { improvementsById, subImprovementsById } = useImprovementItemStore();
     const [improvementContent, setImprovementContent] = useState<string>("");
     const [selectedTitleId, setSelectedTitleId] = useState<string | null>(null);
 
     const handleItemClick = (payload: TitleTargetPayload) => {
         const { id, kind } = payload;
         if (kind === "MAIN") {
-            setImprovementContent(mainTitlesById[id]?.improvement || "");
+            setImprovementContent(improvementsById[id]?.improvement || "");
         } else {
-            setImprovementContent(subTitlesById[id]?.improvement || "");
+            setImprovementContent(subImprovementsById[id]?.improvement || "");
         }
         setSelectedTitleId(id);
         console.log(id);

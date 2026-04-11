@@ -4,6 +4,7 @@ import type {
     AddTitlePayload,
     MainTitleItem,
     MemoirState,
+    SetImprovementPayLoad,
     SubTitleItem,
     TitleTargetPayload,
     UpdateTitlePayload,
@@ -11,75 +12,100 @@ import type {
 
 type LegacyMainTitleItem = {
     title: string;
+    subMemoirTitles: Record<string, { title: string }>;
+};
+
+type LegacyImprovementItem = {
     improvement: string;
-    subMemoirTitles: { title: string; improvement: string }[];
+    subImprovements: Record<string, { improvement: string }>;
 };
 
-const data: LegacyMainTitleItem[] = [
-    {
+const data: Record<string, LegacyMainTitleItem> = {
+    1: {
         title: "2026/01/01 회고 - 오늘 공부한 것",
-        improvement: "오늘은 tsx를 공부했다.",
-        subMemoirTitles: [
-            {
+        subMemoirTitles: {
+            1: {
                 title: "TSX란?",
-                improvement: "TSX는 Typescript를 활용한 JSX컴포넌트입니다.",
             },
-        ],
+        },
     },
-    {
+    2: {
         title: "2026/03/09 회고 - 오늘의 나의 일기",
-        improvement: "오늘의 일상 ㅎㅎ",
-        subMemoirTitles: [
-            {
+        subMemoirTitles: {
+            1: {
                 title: "문구점을 갔다.",
-                improvement: "",
             },
-            {
+            2: {
                 title: "산책을 갔다.",
-                improvement: "",
             },
-        ],
+        },
     },
-];
-
-const createId = () => {
-    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
-        return crypto.randomUUID();
-    }
-    return `memoir-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 };
 
-const normalizeInitialData = (legacyData: LegacyMainTitleItem[]): MemoirState => {
+const improvementData: Record<string, LegacyImprovementItem> = {
+    1: {
+        improvement: "TSX를 공부했다.",
+        subImprovements: {
+            1: {
+                improvement: "TSX는 React 컴포넌트 정의를 위한 TypeScript기반 파일이다.",
+            },
+        },
+    },
+};
+
+const normalizeInitialData = (legacyData: Record<number, LegacyMainTitleItem>): MemoirState => {
     const mainTitleIds: string[] = [];
     const mainTitlesById: Record<string, MainTitleItem> = {};
     const subTitlesById: Record<string, SubTitleItem> = {};
 
-    legacyData.forEach((mainItem) => {
-        const mainId = createId();
-        const subTitleIds = mainItem.subMemoirTitles.map((subItem) => {
-            const subId = createId();
-            subTitlesById[subId] = {
-                id: subId,
-                title: subItem.title,
-                improvement: subItem.improvement,
-                parentMainTitleId: mainId,
-            };
-            return subId;
-        });
+    for (const id in legacyData) {
+        const mainItem = legacyData[id];
+        const subIds: string[] = [];
 
-        mainTitleIds.push(mainId);
-        mainTitlesById[mainId] = {
-            id: mainId,
+        mainTitlesById[id] = {
+            id,
             title: mainItem.title,
-            improvement: mainItem.improvement,
-            subTitleIds,
+            subTitleIds: subIds,
         };
-    });
+
+        for (const subId in mainItem.subMemoirTitles) {
+            const sid = `${id}-${subId}`;
+            subIds.push(sid);
+            subTitlesById[sid] = {
+                id: sid,
+                title: mainItem.subMemoirTitles[subId].title,
+                parentMainTitleId: id,
+            };
+        }
+
+        mainTitleIds.push(id);
+    }
 
     return { mainTitleIds, mainTitlesById, subTitlesById };
 };
 
+const normalizeImprovementData = (legacyData: Record<number, LegacyImprovementItem>) => {
+    const improvementsById: Record<string, { improvement: string }> = {};
+    const subImprovementsById: Record<string, { improvement: string }> = {};
+
+    for (const id in legacyData) {
+        const improvementItem = legacyData[id];
+        improvementsById[id] = {
+            improvement: improvementItem.improvement,
+        };
+
+        for (const subId in improvementItem.subImprovements) {
+            const sid = `${id}-${subId}`;
+            subImprovementsById[sid] = {
+                improvement: improvementItem.subImprovements[subId].improvement,
+            };
+        }
+    }
+    return { improvementsById, subImprovementsById };
+};
+
 const initialState = normalizeInitialData(data);
+const initialImprovementState = normalizeImprovementData(improvementData);
 
 type MainTitleItemStore = {
     mainTitleIds: string[];
@@ -90,18 +116,23 @@ type MainTitleItemStore = {
     updateTitle: (payload: UpdateTitlePayload) => void;
 };
 
+type ImprovementItemStore = {
+    improvementsById: Record<string, { improvement: string }>;
+    subImprovementsById: Record<string, { improvement: string }>;
+    setImprovement: (payload: SetImprovementPayLoad) => void;
+};
+
 export const useMainTitleItemStore = create<MainTitleItemStore>()(
     immer((set) => ({
         ...initialState,
         addTitle: (payload) =>
             set((state) => {
                 if (payload.kind === "MAIN") {
-                    const mainId = createId();
+                    const mainId = String(state.mainTitleIds.length + 1);
                     state.mainTitleIds.push(mainId);
                     state.mainTitlesById[mainId] = {
                         id: mainId,
                         title: payload.title,
-                        improvement: "",
                         subTitleIds: [],
                     };
                     return;
@@ -112,12 +143,12 @@ export const useMainTitleItemStore = create<MainTitleItemStore>()(
                     return;
                 }
 
-                const subId = createId();
+                const parentMainTitleId = payload.parentMainTitleId;
+                const subId = `${parentMainTitleId}-${state.mainTitlesById[parentMainTitleId].subTitleIds.length + 1}`;
                 mainTitle.subTitleIds.push(subId);
                 state.subTitlesById[subId] = {
                     id: subId,
                     title: payload.title,
-                    improvement: "",
                     parentMainTitleId: payload.parentMainTitleId,
                 };
             }),
@@ -162,6 +193,21 @@ export const useMainTitleItemStore = create<MainTitleItemStore>()(
                 if (subTitle) {
                     subTitle.title = payload.title;
                 }
+            }),
+    })),
+);
+
+export const useImprovementItemStore = create<ImprovementItemStore>()(
+    immer((set) => ({
+        ...initialImprovementState,
+        setImprovement: (payload) =>
+            set((state) => {
+                if (payload.kind === "MAIN") {
+                    state.improvementsById[payload.id] = { improvement: payload.improvement };
+                    return;
+                }
+
+                state.subImprovementsById[payload.id] = { improvement: payload.improvement };
             }),
     })),
 );

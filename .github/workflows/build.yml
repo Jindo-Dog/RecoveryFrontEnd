@@ -39,7 +39,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: 7️⃣ Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: 7️⃣ Build and push image
         run: |
-          docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_REPOSITORY }}:${{ github.ref_name }} .
-          docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_REPOSITORY }}:${{ github.ref_name }}
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_REPOSITORY }}:${{ github.ref_name }} \
+            --push \
+            .

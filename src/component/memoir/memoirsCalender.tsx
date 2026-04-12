@@ -8,12 +8,16 @@ import MemoirTitleList from "./write/memoirTitleList.tsx";
 
 const MOCK_DATA: MainTitleItem[] = [
     {
+        id: "1",
         title: "Main Title 1",
-        subMemoirTitles: [{ title: "Sub Title 1.1" }, { title: "Sub Title 1.2" }],
+        mode: "VIEW",
+        subTitleIds: [],
     },
     {
+        id: "2",
         title: "Main Title 2",
-        subMemoirTitles: [{ title: "Sub Title 2.1" }],
+        mode: "VIEW",
+        subTitleIds: [],
     },
 ];
 const MOCK_DATE: string[] = ["2026-03-09", "2026-03-08"];

@@ -27,16 +27,19 @@ jobs:
       - name: 3️⃣ npm install
         run: npm ci
 
-      - name: 4️⃣ npm build
+      - name: 4️⃣ type check
+        run: npm run type-check
+
+      - name: 5️⃣ npm build
         run: npm run build:${{ github.ref_name }}
 
-      - name: 5️⃣ Login Docker Hub
+      - name: 6️⃣ Login Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: 6️⃣ Build and push image
+      - name: 7️⃣ Build and push image
         run: |
           docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_REPOSITORY }}:${{ github.ref_name }} .
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_REPOSITORY }}:${{ github.ref_name }}

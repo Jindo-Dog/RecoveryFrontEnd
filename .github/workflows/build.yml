@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - develop
+      - temp
 
 env:
   DOCKER_REGISTRY: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -42,10 +43,11 @@ jobs:
       - name: 7️⃣ Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: 7️⃣ Build and push image
-        run: |
-          docker buildx build \
-            --platform linux/amd64,linux/arm64 \
-            -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_REPOSITORY }}:${{ github.ref_name }} \
-            --push \
-            .
+      - name: 8️⃣ Build and push image
+        uses: docker/build-push-action@v6.10.0
+        with:
+          context: .
+          file: Dockerfile
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_REPOSITORY }}:${{ github.ref_name }}
+          push: true

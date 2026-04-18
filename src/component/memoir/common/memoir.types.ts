@@ -5,7 +5,6 @@ type MemoirTitleKind = "MAIN" | "SUB";
 type MemoirTitleBase = {
     id: string;
     title: string;
-    mode: Mode;
 };
 
 type MainTitleItem = MemoirTitleBase & {
@@ -44,6 +43,12 @@ type UpdateTitlePayload = TitleTargetPayload & {
     title: string;
 };
 
+type SetImprovementPayLoad = {
+    kind: MemoirTitleKind;
+    id: string;
+    improvement: string;
+};
+
 export type {
     AddMainTitlePayload,
     AddSubTitlePayload,
@@ -55,4 +60,5 @@ export type {
     SubTitleItem,
     TitleTargetPayload,
     UpdateTitlePayload,
+    SetImprovementPayLoad,
 };

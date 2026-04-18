@@ -18,13 +18,12 @@ const MemoirFeedbackPage = () => {
             setImprovementContent(subImprovementsById[id]?.improvement || "");
         }
         setSelectedTitleId(id);
-        console.log(id);
     };
 
     return (
         <section className={"improvement-section"}>
-            <h2 className={"memoir-improvement-title"}>느낀점이나 개선점이 있나요?</h2>
-            <span>이런 상황은 어떻게 해결할 수 있을까요 편하게 이야기해주세요</span>
+            <h2 className={"memoir-improvement-title"}>회고에 대해 피드백 받아보아요!</h2>
+            <span>Recovery AI가 함께합니다.</span>
             <div className={"improvement-box"}>
                 <div className={"left-box"}>
                     <div className="memoir-title">
@@ -43,6 +42,7 @@ const MemoirFeedbackPage = () => {
                         <textarea
                             placeholder="개선점을 입력해주세요"
                             value={improvementContent}
+                            readOnly={true}
                             onChange={(e) => setImprovementContent(e.currentTarget.value)}
                         />
                     </div>

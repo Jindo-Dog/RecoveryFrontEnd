@@ -2,9 +2,25 @@ import "./memoirImprovementPage.scss";
 import MemoirTitleList from "../write/memoirTitleList";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useImprovementItemStore } from "../common/useMainTitleItemStore.ts";
+import type { TitleTargetPayload } from "../common/memoir.types.ts";
 
 const MemoirImprovementPage = () => {
     const [feedbackCnt] = useState(0);
+    const { improvementsById, subImprovementsById } = useImprovementItemStore();
+    const [improvementContent, setImprovementContent] = useState<string>("");
+    const [selectedTitleId, setSelectedTitleId] = useState<string | null>(null);
+
+    const handleItemClick = (payload: TitleTargetPayload) => {
+        const { id, kind } = payload;
+        if (kind === "MAIN") {
+            setImprovementContent(improvementsById[id]?.improvement || "");
+        } else {
+            setImprovementContent(subImprovementsById[id]?.improvement || "");
+        }
+        setSelectedTitleId(id);
+        console.log(id);
+    };
 
     return (
         <section className={"improvement-section"}>
@@ -15,13 +31,23 @@ const MemoirImprovementPage = () => {
                     <div className="memoir-title">
                         <span>오늘 내게 있었던 일</span>
                     </div>
-                    <MemoirTitleList editable={false} width={"625px"} />
+                    <MemoirTitleList
+                        editable={false}
+                        width={"625px"}
+                        selectHook={(payload) => handleItemClick(payload)}
+                        selectedTitleId={selectedTitleId}
+                    />
                 </div>
                 <div className={"right-box"}>
                     <div className="memoir-title">
                         <span>개선점</span>
                     </div>
-                    <textarea placeholder="개선점을 입력해주세요" className={"improvement-editor"} />
+                    <textarea
+                        placeholder="개선점을 입력해주세요"
+                        className={"improvement-editor"}
+                        value={improvementContent}
+                        onChange={(e) => setImprovementContent(e.currentTarget.value)}
+                    />
                 </div>
             </div>
 

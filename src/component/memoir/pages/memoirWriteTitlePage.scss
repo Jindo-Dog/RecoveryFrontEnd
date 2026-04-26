@@ -5,54 +5,61 @@
     @include flex-center;
     flex-direction: column;
     height: 100vh;
+    gap: rem(40px);
 
-    .memoir-edit-title {
+    .memoir-top {
         margin-top: rem(40px);
-        font-size: $title-font-size;
+        .memoir-main-title {
+            font-size: $title-font-size;
+        }
     }
 
-    .memoir-box {
+    .memoir-middle {
         display: flex;
         flex-direction: column;
         flex: 1;
         gap: rem(10px);
         min-height: 0;
 
-        .memoir-title {
+        .sub-title {
             width: 100%;
             text-align: left;
-            margin-top: rem(40px);
+        }
+
+        .progress-circles {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            margin-top: rem(10px);
+            gap: rem(5px);
+
+            div {
+                width: rem(10px);
+                height: rem(10px);
+                border: rem(1px) solid gray;
+                border-radius: rem(10px);
+            }
+
+            .memoir-first-circle {
+                background-color: gray;
+            }
         }
     }
 
-    .btn-footer {
+    .memoir-bottom {
         display: flex;
-        margin-top: rem(60px);
-        width: rem(1270px);
-        height: rem(80px);
+        width:100%;
+        padding: rem(50px);
+        height: rem(120px);
         justify-content: flex-end;
+        align-items: center;
+        gap: rem(10px);
 
-        .improvement-btn {
-            @include btn-solid($secondary-color);
-        }
-    }
-
-    .progress-circles {
-        display: flex;
-        justify-content: center;
-        flex-direction: row;
-        margin-top: rem(10px);
-        gap: rem(5px);
-
-        div {
-            width: rem(10px);
-            height: rem(10px);
-            border: rem(1px) solid gray;
+        .memoir-btn {
+            width: 200px;
+            height: 40px;
+            font-size: rem(15px);
             border-radius: rem(10px);
-        }
-
-        .first-circle {
-            background-color: gray;
         }
     }
 }

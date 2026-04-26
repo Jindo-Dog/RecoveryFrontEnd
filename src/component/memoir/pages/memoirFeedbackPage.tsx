@@ -21,51 +21,51 @@ const MemoirFeedbackPage = () => {
     };
 
     return (
-        <section className={"improvement-section"}>
-            <h2 className={"memoir-improvement-title"}>회고에 대해 피드백 받아보아요!</h2>
-            <span>Recovery AI가 함께합니다.</span>
-            <div className={"improvement-box"}>
-                <div className={"left-box"}>
-                    <div className="memoir-title">
-                        <span>오늘 내게 있었던 일</span>
-                    </div>
-                    <MemoirTitleList
-                        editable={false}
-                        width={"625px"}
-                        selectHook={(payload) => handleItemClick(payload)}
-                        selectedTitleId={selectedTitleId}
-                    />
-                </div>
-                <div className={"right-box"}>
-                    <div className={"improvement-view-box"}>
-                        <span className={"text-title"}>개선점</span>
-                        <textarea
-                            placeholder="개선점을 입력해주세요"
-                            value={improvementContent}
-                            readOnly={true}
-                            onChange={(e) => setImprovementContent(e.currentTarget.value)}
+        <section className={"memoir-section"}>
+            <article className={"memoir-top"}>
+                <h2 className={"memoir-main-title"}>회고에 대해 피드백 받아보아요!</h2>
+                <span>Recovery AI가 함께합니다.</span>
+            </article>
+            <article className={"memoir-middle"}>
+                <div className={"content-box"}>
+                    <div className={"left-box"}>
+                        <div className="sub-title">
+                            <span>오늘 내게 있었던 일</span>
+                        </div>
+                        <MemoirTitleList
+                            editable={false}
+                            width={"625px"}
+                            selectHook={(payload) => handleItemClick(payload)}
+                            selectedTitleId={selectedTitleId}
                         />
                     </div>
-                    <div className={"feedback-box"}>
-                        <span className={"feedback-title"}>피드백</span>
-                        <textarea value={"AI 피드백"} readOnly={true} />
+                    <div className={"right-box"}>
+                        <div className={"improvement-view-box"}>
+                            <span className={"sub-title"}>개선점</span>
+                            <textarea
+                                className={"feedback-improvement-textarea"}
+                                placeholder="개선점을 입력해주세요"
+                                value={improvementContent}
+                                readOnly={true}
+                                onChange={(e) => setImprovementContent(e.currentTarget.value)}
+                            />
+                        </div>
+                        <div className={"feedback-box"}>
+                            <span className={"sub-title"}>피드백</span>
+                            <textarea className="ai-feedback-textarea" value={"AI 피드백"} readOnly={true} />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </article>
 
-            <div className="progress-circles">
-                <div className="first-circle"></div>
-                <div className="second-circle"></div>
-            </div>
-
-            <div className={"btn-footer"}>
+            <article className={"memoir-bottom"}>
                 <Link to="/memoir/improvement">
-                    <button className={"previous-btn"}>이전</button>
+                    <button className={"memoir-btn"}>이전</button>
                 </Link>
                 <Link to="/">
-                    <button className={"feedback-btn"}>완료</button>
+                    <button className={"memoir-btn"}>완료</button>
                 </Link>
-            </div>
+            </article>
         </section>
     );
 };

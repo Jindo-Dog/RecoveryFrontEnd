@@ -1,100 +1,28 @@
 @use "/src/styles/styles" as *;
 @use "/src/styles/function" as *;
 
-.improvement-section {
-  @include flex-center;
+.improvement-view-box {
+  display: flex;
   flex-direction: column;
+  flex: 1;
+}
 
-  .memoir-improvement-title {
-    margin-top: rem(40px);
-    font-size: $title-font-size;
-  }
+.ai-feedback-textarea {
+  width: rem(625px);
+  margin-top: rem(10px);
+  flex: 1;
+  resize: none;
+}
 
-  .text-title {
-    text-align: left;
-  }
+.feedback-box {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 
-  .improvement-box {
-    display: flex;
-    flex-direction: row;
-    gap: rem(10px);
-    margin-top: rem(40px);
-
-    .left-box {
-      display: flex;
-      flex-direction: column;
-      gap: rem(10px);
-    }
-
-    .right-box {
-      display: flex;
-      flex-direction: column;
-      gap: rem(10px);
-
-      .improvement-view-box {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-      }
-
-      .feedback-box {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-      }
-
-      .feedback-title {
-        text-align: left;
-      }
-
-      span {
-        display: block;
-      }
-
-      textarea {
-        width: rem(625px);
-        flex: 1;
-        resize: none;
-        margin-top: rem(10px);
-      }
-
-    }
-
-  }
-
-  .progress-circles {
-    display: flex;
-    flex-direction: row;
-    margin-top: rem(10px);
-    gap: rem(5px);
-
-    div {
-      width: rem(10px);
-      height: rem(10px);
-      border: rem(1px) solid gray;
-      border-radius: rem(10px);
-    }
-
-    .second-circle {
-      background-color: gray;
-    }
-  }
-
-  .btn-footer {
-    display: flex;
-    margin-top: rem(60px);
-    width: 100%;
-    max-width: rem(1270px);
-    min-width: rem(800px);
-    justify-content: flex-end;
-    gap: rem(5px);
-
-    .previous-btn {
-      @include btn-solid($secondary-color);
-    }
-
-    .improvement-btn {
-      @include btn-solid($secondary-color);
-    }
-  }
+.feedback-improvement-textarea{
+  width: rem(625px);
+  margin-top: rem(10px);
+  flex: 1;
+  resize: none;
 }

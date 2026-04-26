@@ -31,7 +31,7 @@ const MemoirImprovementPage = () => {
 
             <article className={"memoir-middle"}>
                 <div className={"content-box"}>
-                    <div className={"left-box"}>
+                    <div className={"sub-box"}>
                         <span className={"sub-title"}>오늘 내게 있었던 일</span>
                         <MemoirTitleList
                             editable={false}
@@ -40,11 +40,11 @@ const MemoirImprovementPage = () => {
                             selectedTitleId={selectedTitleId}
                         />
                     </div>
-                    <div className={"right-box"}>
+                    <div className={"sub-box"}>
                         <span className="sub-title">개선점</span>
                         <textarea
                             placeholder="개선점을 입력해주세요"
-                            className={"improvement-editor"}
+                            className={"memoir-container"}
                             value={improvementContent}
                             onChange={(e) => setImprovementContent(e.currentTarget.value)}
                         />

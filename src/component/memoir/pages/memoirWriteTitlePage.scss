@@ -5,7 +5,7 @@
     @include flex-center;
     flex-direction: column;
     height: 100vh;
-    gap: rem(40px);
+    padding: 0 rem(175px);
 
     .memoir-top {
         margin-top: rem(40px);
@@ -49,15 +49,14 @@
     .memoir-bottom {
         display: flex;
         width:100%;
-        padding: rem(50px);
         height: rem(120px);
         justify-content: flex-end;
         align-items: center;
         gap: rem(10px);
 
         .memoir-btn {
-            width: 200px;
-            height: 40px;
+            width: rem(200px);
+            height: rem(40px);
             font-size: rem(15px);
             border-radius: rem(10px);
         }

@@ -35,7 +35,6 @@ const MemoirImprovementPage = () => {
                         <span className={"sub-title"}>오늘 내게 있었던 일</span>
                         <MemoirTitleList
                             editable={false}
-                            width={"625px"}
                             selectHook={(payload) => handleItemClick(payload)}
                             selectedTitleId={selectedTitleId}
                         />

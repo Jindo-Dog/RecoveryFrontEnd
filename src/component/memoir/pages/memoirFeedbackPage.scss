@@ -1,28 +1,42 @@
 @use "/src/styles/styles" as *;
 @use "/src/styles/function" as *;
 
-.improvement-view-box {
+.left-box {
   display: flex;
   flex-direction: column;
+  gap: rem(10px);
   flex: 1;
 }
 
-.ai-feedback-textarea {
-  width: rem(625px);
-  margin-top: rem(10px);
-  flex: 1;
-  resize: none;
-}
-
-.feedback-box {
+.right-box {
   display: flex;
   flex-direction: column;
+  gap: rem(10px);
   flex: 1;
-}
 
-.feedback-improvement-textarea{
-  width: rem(625px);
-  margin-top: rem(10px);
-  flex: 1;
-  resize: none;
+  .improvement-view-box {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    .feedback-improvement-textarea{
+      margin-top: rem(10px);
+      flex: 1;
+      resize: none;
+    }
+
+  }
+
+  .feedback-box {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    .ai-feedback-textarea {
+      margin-top: rem(10px);
+      flex: 1;
+      resize: none;
+    }
+
+  }
 }

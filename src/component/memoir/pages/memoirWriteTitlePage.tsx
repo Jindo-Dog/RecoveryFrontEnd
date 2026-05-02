@@ -14,7 +14,7 @@ const MemoirWriteTitlePage = () => {
                 <div className="sub-title">
                     <span>오늘의 나를 회고해보세요</span>
                 </div>
-                <MemoirTitleList editable={true} width={"1270px"} selectHook={() => null} />
+                <MemoirTitleList editable={true} selectHook={() => null} />
                 <div className="progress-circles">
                     <div className="memoir-first-circle"></div>
                     <div className="memoir-second-circle"></div>

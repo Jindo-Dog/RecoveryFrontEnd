@@ -12,6 +12,10 @@
         flex-direction: column;
         gap: rem(10px);
         flex: 1;
+
+        textarea {
+            resize: none;
+        }
     }
 
     .improvement-editor {

@@ -1,13 +1,13 @@
 import "./memoirImprovementPage.scss";
 import MemoirTitleList from "../write/memoirTitleList";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useImprovementItemStore } from "../common/useMainTitleItemStore.ts";
 import type { TitleTargetPayload } from "../common/memoir.types.ts";
 
 const MemoirImprovementPage = () => {
     const [feedbackCnt] = useState(0);
-    const { improvementsById, subImprovementsById } = useImprovementItemStore();
+    const { improvementsById, subImprovementsById, saveImprovement } = useImprovementItemStore();
     const [improvementContent, setImprovementContent] = useState<string>("");
     const [selectedTitleId, setSelectedTitleId] = useState<string | null>(null);
 
@@ -21,6 +21,17 @@ const MemoirImprovementPage = () => {
         setSelectedTitleId(id);
         console.log(id);
     };
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            if (selectedTitleId && improvementContent) {
+                saveImprovement(selectedTitleId, improvementContent);
+                console.log(`개선점 자동 저장: ${selectedTitleId}`);
+            }
+        }, 10000);
+
+        return () => clearInterval(intervalId);
+    }, [selectedTitleId, improvementContent, saveImprovement]);
 
     return (
         <section className={"memoir-section"}>
@@ -60,7 +71,14 @@ const MemoirImprovementPage = () => {
                     <button className={"memoir-btn"}>이전</button>
                 </Link>
                 <Link to="/memoir/feedback">
-                    <button className={"memoir-btn"}>피드백 받기({feedbackCnt}/5)</button>
+                    <button
+                        className={"memoir-btn"}
+                        onClick={() => {
+                            saveImprovement(selectedTitleId!, improvementContent);
+                        }}
+                    >
+                        피드백 받기({feedbackCnt}/5)
+                    </button>
                 </Link>
             </article>
         </section>

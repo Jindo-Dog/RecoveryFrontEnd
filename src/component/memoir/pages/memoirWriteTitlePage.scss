@@ -1,5 +1,6 @@
 @use "/src/styles/styles" as *;
 @use "/src/styles/function" as *;
+@use "/src/component/memoir/memoirStyle" as *;
 
 .memoir-section {
     @include flex-center;
@@ -16,9 +17,7 @@
     }
 
     .memoir-middle {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
+        @include column-flex-box;
         width: 100%;
         gap: rem(10px);
         min-height: 0;

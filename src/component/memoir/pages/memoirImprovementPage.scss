@@ -1,17 +1,14 @@
 @use "/src/styles/styles" as *;
 @use "/src/styles/function" as *;
+@use "/src/component/memoir/memoirStyle" as *;
 
 .content-box {
-    display: flex;
-    flex-direction: row;
+    @include column-flex-box;
     gap: rem(10px);
-    flex: 1;
 
     .sub-box {
-        display: flex;
-        flex-direction: column;
+        @include column-flex-box;
         gap: rem(10px);
-        flex: 1;
 
         textarea {
             resize: none;

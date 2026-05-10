@@ -1,23 +1,18 @@
 @use "/src/styles/styles" as *;
 @use "/src/styles/function" as *;
+@use "/src/component/memoir/memoirStyle" as *;
 
 .left-box {
-  display: flex;
-  flex-direction: column;
+  @include column-flex-box;
   gap: rem(10px);
-  flex: 1;
 }
 
 .right-box {
-  display: flex;
-  flex-direction: column;
+  @include column-flex-box;
   gap: rem(10px);
-  flex: 1;
 
   .improvement-view-box {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+    @include column-flex-box;
 
     .feedback-improvement-textarea{
       margin-top: rem(10px);
@@ -28,9 +23,7 @@
   }
 
   .feedback-box {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+    @include column-flex-box;
 
     .ai-feedback-textarea {
       margin-top: rem(10px);

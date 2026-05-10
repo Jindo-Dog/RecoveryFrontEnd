@@ -3,3 +3,9 @@
   flex-direction: column;
   flex: 1;
 }
+
+@mixin row-flex-box {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
